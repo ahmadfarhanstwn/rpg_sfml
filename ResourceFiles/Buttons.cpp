@@ -80,8 +80,8 @@ void Buttons::update(const sf::Vector2f mousePos)
     }
 }
 
-void Buttons::render(sf::RenderTarget* target)
+void Buttons::render(sf::RenderTarget& target)
 {
-    target->draw(this->shape);
-    target->draw(this->text);
+    target.draw(this->shape);
+    target.draw(this->text);
 }

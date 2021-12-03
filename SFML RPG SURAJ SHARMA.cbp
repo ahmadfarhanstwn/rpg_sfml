@@ -54,12 +54,16 @@
 		</Linker>
 		<Unit filename="Components/AnimationComponent.cpp" />
 		<Unit filename="Components/AnimationComponent.h" />
+		<Unit filename="Components/HitboxComponent.cpp" />
+		<Unit filename="Components/HitboxComponent.h" />
 		<Unit filename="Components/MovementComponent.cpp" />
 		<Unit filename="Components/MovementComponent.h" />
 		<Unit filename="Entities/Entity.cpp" />
 		<Unit filename="Entities/Entity.h" />
 		<Unit filename="Entities/Player.cpp" />
 		<Unit filename="Entities/Player.h" />
+		<Unit filename="GameStates/EditorState.cpp" />
+		<Unit filename="GameStates/EditorState.h" />
 		<Unit filename="GameStates/GameState.cpp" />
 		<Unit filename="GameStates/GameState.h" />
 		<Unit filename="GameStates/MainMenuState.cpp" />

@@ -20,6 +20,7 @@ protected:
 
     std::map<std::string, sf::Texture> textures;
     bool quit;
+    bool paused;
 
     virtual void initKeyBinds() = 0;
 
@@ -30,8 +31,12 @@ public:
     //Accessor
     const bool& getQuit() const;
 
+    //Function
+    void endState();
+    void pauseState();
+    void unpauseState();
+
     virtual void updateMousePosition();
-    virtual void endState();
     virtual void updateInput(const float& dt) = 0;
     virtual void update(const float& dt)=0;
     virtual void render(sf::RenderTarget* target = nullptr)=0;
