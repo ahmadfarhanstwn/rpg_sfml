@@ -19,6 +19,8 @@
 					<Add directory="Entities" />
 					<Add directory="ResourceFiles" />
 					<Add directory="Components" />
+					<Add directory="Tile" />
+					<Add directory="GUI" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -33,6 +35,8 @@
 					<Add directory="Entities" />
 					<Add directory="ResourceFiles" />
 					<Add directory="Components" />
+					<Add directory="Tile" />
+					<Add directory="GUI" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -62,14 +66,20 @@
 		<Unit filename="Entities/Entity.h" />
 		<Unit filename="Entities/Player.cpp" />
 		<Unit filename="Entities/Player.h" />
+		<Unit filename="GUI/PauseMenu.cpp" />
+		<Unit filename="GUI/PauseMenu.h" />
 		<Unit filename="GameStates/EditorState.cpp" />
 		<Unit filename="GameStates/EditorState.h" />
 		<Unit filename="GameStates/GameState.cpp" />
 		<Unit filename="GameStates/GameState.h" />
 		<Unit filename="GameStates/MainMenuState.cpp" />
 		<Unit filename="GameStates/MainMenuState.h" />
+		<Unit filename="GameStates/SettingsState.cpp" />
+		<Unit filename="GameStates/SettingsState.h" />
 		<Unit filename="ResourceFiles/Buttons.cpp" />
 		<Unit filename="ResourceFiles/Buttons.h" />
+		<Unit filename="Tile/Tile.cpp" />
+		<Unit filename="Tile/Tile.h" />
 		<Unit filename="include/Game.h" />
 		<Unit filename="include/State.h">
 			<Option virtualFolder="GameStates/" />

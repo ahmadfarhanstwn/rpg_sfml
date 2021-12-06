@@ -22,6 +22,10 @@ protected:
     bool quit;
     bool paused;
 
+    //Key Time
+    float keytime;
+    float keytimeMax;
+
     virtual void initKeyBinds() = 0;
 
 public:
@@ -30,6 +34,7 @@ public:
 
     //Accessor
     const bool& getQuit() const;
+    const bool getKeytime();
 
     //Function
     void endState();
@@ -37,6 +42,7 @@ public:
     void unpauseState();
 
     virtual void updateMousePosition();
+    virtual void updateKeytime(const float& dt);
     virtual void updateInput(const float& dt) = 0;
     virtual void update(const float& dt)=0;
     virtual void render(sf::RenderTarget* target = nullptr)=0;

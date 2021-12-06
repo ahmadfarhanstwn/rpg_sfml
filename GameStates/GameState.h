@@ -25,7 +25,7 @@ public:
     //Functions
     void updateInput(const float& dt);
     void updatePlayerInput(const float& dt);
-
+    void updatePauseMenuButtons();
     void update(const float& dt);
     void render(sf::RenderTarget* target = NULL);
 };

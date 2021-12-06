@@ -3,7 +3,8 @@
 
 #include <GameState.h>
 #include "EditorState.h"
-#include "Buttons.h"
+#include "SettingsState.h"
+#include "GUI.h"
 
 class MainMenuState : public State
 {
@@ -18,7 +19,7 @@ private:
     sf::RectangleShape background;
     sf::Font font;
 
-    std::map<std::string, Buttons*> buttons;
+    std::map<std::string, gui::Buttons*> buttons;
 
 public:
     MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);

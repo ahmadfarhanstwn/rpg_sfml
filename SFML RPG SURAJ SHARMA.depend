@@ -5,7 +5,7 @@
 1638177943 d:\study\learn c++ sfml\sfml rpg suraj sharma\include\game.h
 	"MainMenuState.h"
 
-1638538644 d:\study\learn c++ sfml\sfml rpg suraj sharma\include\state.h
+1638611616 d:\study\learn c++ sfml\sfml rpg suraj sharma\include\state.h
 	"Player.h"
 
 1525812018 c:\sfml-2.5.1\include\sfml\graphics.hpp
@@ -596,17 +596,17 @@
 	<SFML/Network/IpAddress.hpp>
 	<vector>
 
-1638538659 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\state.cpp
+1638612264 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\state.cpp
 	"State.h"
 
 1638177994 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\game.cpp
 	"Game.h"
 
-1638542795 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.h
+1638614463 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.h
 	"State.h"
 	"PauseMenu.h"
 
-1638542928 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
+1638612135 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
 	"GameState.h"
 
 1638432995 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.h
@@ -617,12 +617,13 @@
 1638432173 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.cpp
 	"Entity.h"
 
-1638433942 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\mainmenustate.h
+1638782507 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\mainmenustate.h
 	<GameState.h>
 	"EditorState.h"
-	"Buttons.h"
+	"SettingsState.h"
+	"GUI.h"
 
-1638417401 d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\buttons.h
+1638781701 d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\buttons.h
 	<iostream>
 	<ctime>
 	<stdlib.h>
@@ -632,10 +633,10 @@
 	"SFML/System.hpp"
 	"SFML/Audio.hpp"
 
-1638417391 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\buttons.cpp
+1638609887 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\buttons.cpp
 	"Buttons.h"
 
-1638417683 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\mainmenustate.cpp
+1638781816 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\mainmenustate.cpp
 	"MainMenuState.h"
 
 1638525898 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.h
@@ -677,9 +678,9 @@
 1638525267 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\animationcomponent.cpp
 	"AnimationComponent.h"
 
-1638434526 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\editorstate.h
+1638782498 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\editorstate.h
 	"State.h"
-	"Buttons.h"
+	"GUI.h"
 
 1638437092 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\hitboxcomponent.h
 	<iostream>
@@ -697,7 +698,7 @@
 1638417550 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\editorstate.cpp
 	"EditorState.h"
 
-1638542267 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.h
+1638782525 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.h
 	<vector>
 	<iostream>
 	<ctime>
@@ -708,7 +709,7 @@
 	<map>
 	<vector>
 	<string>
-	"Buttons.h"
+	"GUI.h"
 	"SFML/Graphics.hpp"
 	"SFML/Window.hpp"
 	"SFML/System.hpp"
@@ -720,6 +721,27 @@
 
 1638526760 d:\study\learn c++ sfml\sfml rpg suraj sharma\tile\tile.h
 
-1638540494 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.cpp
+1638781844 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.cpp
 	"PauseMenu.h"
+
+1638801284 d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\settingsstate.h
+	<State.h>
+	"GUI.h"
+
+1638801585 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\settingsstate.cpp
+	"SettingsState.h"
+
+1638802084 d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.h
+	<iostream>
+	<ctime>
+	<stdlib.h>
+	<sstream>
+	<vector>
+	"SFML/Graphics.hpp"
+	"SFML/Window.hpp"
+	"SFML/System.hpp"
+	"SFML/Audio.hpp"
+
+1638799045 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.cpp
+	"GUI.h"
 

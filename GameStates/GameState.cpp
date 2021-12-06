@@ -32,6 +32,8 @@ void GameState::initTextures()
 void GameState::initPauseMenu()
 {
     this->pMenu = new PauseMenu(*this->window, this->font);
+
+    this->pMenu->addButtons("QUIT", 150.f, "Exit Game");
 }
 
 void GameState::initPlayers()
@@ -57,7 +59,7 @@ GameState::~GameState()
 
 void GameState::updateInput(const float& dt)
 {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds.at("Escape"))))
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key(this->keyBinds.at("Escape"))) && this->getKeytime())
     {
         if (!this->paused)
             this->pauseState();
@@ -78,9 +80,18 @@ void GameState::updatePlayerInput(const float& dt)
         this->player->move(0.f, 1.f, dt);
 }
 
+void GameState::updatePauseMenuButtons()
+{
+    if (this->pMenu->isPressed("QUIT") && this->getKeytime())
+    {
+        this->endState();
+    }
+}
+
 void GameState::update(const float& dt)
 {
     this->updateMousePosition();
+    this->updateKeytime(dt);
     this->updateInput(dt);
 
     if (!this->paused) //not paused
@@ -90,7 +101,8 @@ void GameState::update(const float& dt)
     }
     else //paused
     {
-        this->pMenu->update();
+        this->pMenu->update(this->mousePosView);
+        this->updatePauseMenuButtons();
     }
 }
 

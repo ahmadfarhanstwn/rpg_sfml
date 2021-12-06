@@ -44,22 +44,22 @@ void MainMenuState::initFonts()
 
 void MainMenuState::initButtons()
 {
-    this->buttons["GAME_STATE"] = new Buttons(150,300,400,50,
+    this->buttons["GAME_STATE"] = new gui::Buttons(150,300,400,50,
                                               &this->font,"New Game", 50,
                                               sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
                                               sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
 
-    this->buttons["SETTINGS"] = new Buttons(150,370,400,50,
+    this->buttons["SETTINGS_STATE"] = new gui::Buttons(150,370,400,50,
                                             &this->font,"Settings", 50,
                                             sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
                                             sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
 
-    this->buttons["EDIT_STATE"] = new Buttons(150,440,400,50,
+    this->buttons["EDIT_STATE"] = new gui::Buttons(150,440,400,50,
                                               &this->font,"Editor", 50,
                                               sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
                                               sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
 
-    this->buttons["QUIT"] = new Buttons(150,510,400,50,
+    this->buttons["QUIT"] = new gui::Buttons(150,510,400,50,
                                         &this->font,"Quit", 50,
                                         sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
                                         sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
@@ -101,9 +101,12 @@ void MainMenuState::updateButtons()
     }
 
     //Settings
+    if (this->buttons["SETTINGS_STATE"]->isPressed())
+    {
+        this->states->push(new SettingsState(this->window, this->supportedKeys, this->states));
+    }
 
     //Editor
-    //New Game
     if (this->buttons["EDIT_STATE"]->isPressed())
     {
         this->states->push(new EditorState(this->window, this->supportedKeys, this->states));

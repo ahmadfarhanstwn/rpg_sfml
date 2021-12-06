@@ -2,7 +2,7 @@
 #define EDITORSTATE_H
 
 #include "State.h"
-#include "Buttons.h"
+#include "GUI.h"
 
 class EditorState : public State
 {
@@ -15,7 +15,7 @@ private:
 
     sf::Font font;
 
-    std::map<std::string, Buttons*> buttons;
+    std::map<std::string, gui::Buttons*> buttons;
 
 public:
     EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
