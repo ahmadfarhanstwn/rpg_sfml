@@ -1,16 +1,20 @@
 #ifndef TILE_H
 #define TILE_H
 
-
 class Tile
 {
-    public:
-        Tile();
-        virtual ~Tile();
+private:
 
-    protected:
+protected:
+    sf::RectangleShape shape;
 
-    private:
+public:
+    Tile();
+    Tile(float x, float y, float gridSizeF);
+    virtual ~Tile();
+
+    void update();
+    void render(sf::RenderTarget& target);
 };
 
 #endif // TILE_H

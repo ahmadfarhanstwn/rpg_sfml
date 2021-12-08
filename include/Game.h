@@ -7,11 +7,11 @@ class Game
 {
 private:
     //Variables
-    std::vector<sf::VideoMode> videoModes;
-    sf::ContextSettings windowSettings;
+    GraphicsSettings graphicsSettings;
+    StateData stateData;
     sf::RenderWindow* window;
     sf::Event ev;
-    bool fullscreen;
+    float gridSize;
 
     //Delta Time
     sf::Clock dtTime;
@@ -25,8 +25,10 @@ private:
 
     //Init Functions()
     void initVariables();
+    void initGraphicsSettings();
     void initWindow();
     void initKeys();
+    void initStateData();
     void initStates();
 
 public:

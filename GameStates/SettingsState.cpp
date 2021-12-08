@@ -1,9 +1,10 @@
+#include "stdafx.h"
 #include "SettingsState.h"
 
 //Init Functions
 void SettingsState::initVariables()
 {
-
+    this->modes = sf::VideoMode::getFullscreenModes();
 }
 
 void SettingsState::initBackgrounds()
@@ -44,23 +45,45 @@ void SettingsState::initFonts()
 
 void SettingsState::initGui()
 {
-    this->buttons["QUIT"] = new gui::Buttons(0,0,250,25,
-                                        &this->font,"Back", 20,
+    this->buttons["BACK"] = new gui::Buttons(1150,650,250,25,
+                                        &this->font,"Back", 30,
                                         sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
                                         sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
 
-    std::string resolutionLists[] = {"1366x768", "800x600", "640x480"};
-    this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(650,350,200,50,font,resolutionLists,3,0);
+    this->buttons["APPLY"] = new gui::Buttons(950,650,250,25,
+                                        &this->font,"Apply", 30,
+                                        sf::Color(70,70,70,200),sf::Color(150,150,150,255),sf::Color(20,20,20,200),
+                                        sf::Color(70,70,70,0),sf::Color(150,150,150,0),sf::Color(20,20,20,0));
+
+
+
+    std::vector<std::string> modes_str;
+    for(auto &i : this->modes)
+    {
+        modes_str.push_back(std::to_string(i.width) + 'x' + std::to_string(i.height));
+    }
+    this->dropDownLists["RESOLUTIONS"] = new gui::DropDownList(650,350,200,50,font,modes_str.data(),modes_str.size(),0);
 }
 
-SettingsState::SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states)
-    : State(window, supportedKeys, states)
+void SettingsState::initText()
+{
+    this->optionsText.setFont(this->font);
+    this->optionsText.setPosition(sf::Vector2f(100.f,350.f));
+    this->optionsText.setCharacterSize(30);
+    this->optionsText.setFillColor(sf::Color(255,255,255,200));
+
+    this->optionsText.setString("Resolution \n\nFullscreen \n\nVsync \n\nAntialiasing");
+}
+
+SettingsState::SettingsState(StateData* state_data)
+    : State(state_data)
 {
     this->initVariables();
     this->initBackgrounds();
     this->initFonts();
     this->initKeyBinds();
     this->initGui();
+    this->initText();
 }
 
 SettingsState::~SettingsState()
@@ -102,9 +125,16 @@ void SettingsState::updateGui(const float& dt)
     //Drop Downs funtionality
 
     //Quit the game
-    if (this->buttons["QUIT"]->isPressed())
+    if (this->buttons["BACK"]->isPressed())
     {
         this->endState();
+    }
+
+    //Apply Settings
+    if (this->buttons["APPLY"]->isPressed())
+    {
+        this->stateData->graphicsSettings->resolution = this->modes[this->dropDownLists["RESOLUTIONS"]->getActiveElementId()];
+        this->window->create(this->stateData->graphicsSettings->resolution, this->stateData->graphicsSettings->title, sf::Style::Default);
     }
 }
 
@@ -137,4 +167,6 @@ void SettingsState::render(sf::RenderTarget* target)
     target->draw(this->background);
 
     this->renderGui(*target);
+
+    target->draw(this->optionsText);
 }

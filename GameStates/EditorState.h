@@ -3,6 +3,13 @@
 
 #include "State.h"
 #include "GUI.h"
+#include "PauseMenu.h"
+#include "TileMap.h"
+
+class State;
+class GUI;
+class PauseMenu;
+class TileMap;
 
 class EditorState : public State
 {
@@ -11,22 +18,32 @@ private:
     void initBackgrounds();
     void initKeyBinds();
     void initFonts();
+    void initPauseMenu();
     void initButtons();
+    void initGui();
+    void initTileMap();
 
     sf::Font font;
+    PauseMenu* pMenu;
+    TileMap* tileMap;
+
+    sf::RectangleShape selectorRect;
 
     std::map<std::string, gui::Buttons*> buttons;
 
 public:
-    EditorState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+    EditorState(StateData* state_data);
     virtual ~EditorState();
 
     //Functions
     void updateInput(const float& dt);
-
+    void updateEditorInput(const float& dt);
     void updateButtons();
+    void updateGui();
+    void updatePauseMenuButtons();
     void update(const float& dt);
     void renderButtons(sf::RenderTarget& target);
+    void renderGui(sf::RenderTarget& target);
     void render(sf::RenderTarget* target = NULL);
 };
 

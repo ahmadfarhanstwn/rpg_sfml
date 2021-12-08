@@ -1,3 +1,4 @@
+#include "stdafx.h"
 #include "Game.h"
 
 //Static Functions
@@ -6,50 +7,34 @@
 void Game::initVariables()
 {
     this->window = NULL;
-    this->fullscreen = false;
+//    this->fullscreen = false;
     this->dt = 0.f;
+
+    this->gridSize = 100.f;
+}
+
+void Game::initGraphicsSettings()
+{
+    this->graphicsSettings.loadFromFile("Config/graphics.ini");
 }
 
 //Init Functions
 void Game::initWindow()
 {
-    /**initializing window stuff, set size, and the name of the window**/
-
-    //read file display.ini
-    std::ifstream ifs("Config/display.ini");
-    this->videoModes = sf::VideoMode::getFullscreenModes();
-
-    //initialize variable for init window
-    std::string title = "None";
-    sf::VideoMode window_size = sf::VideoMode::getDesktopMode();
-    bool fullscreenMode = false;
-    unsigned framerate_limit = 120;
-    bool vertical_sync_enabled = false;
-    unsigned antialiasing_level = 0;
-
-    //change the variable to the setting in the config file
-    if (ifs.is_open())
-    {
-        std::getline(ifs, title);
-        ifs >> window_size.width >> window_size.height;
-        ifs >> fullscreenMode;
-        ifs >> framerate_limit;
-        ifs >> vertical_sync_enabled;
-        ifs >> antialiasing_level;
-    }
-
-    //close the file
-    ifs.close();
-
-    //init window by the settings from init
-    this->fullscreen = fullscreenMode;
-    this->windowSettings.antialiasingLevel = antialiasing_level;
-    if (this->fullscreen)
-        this->window = new sf::RenderWindow(window_size, title, sf::Style::Fullscreen, this->windowSettings);
+    if (this->graphicsSettings.fullscreen)
+        this->window = new sf::RenderWindow(
+                                            this->graphicsSettings.resolution,
+                                            this->graphicsSettings.title,
+                                            sf::Style::Fullscreen,
+                                            this->graphicsSettings.contextSettings);
     else
-        this->window = new sf::RenderWindow(window_size, title, sf::Style::Titlebar | sf::Style::Close, this->windowSettings);
-    this->window->setFramerateLimit(framerate_limit);
-    this->window->setVerticalSyncEnabled(vertical_sync_enabled);
+        this->window = new sf::RenderWindow(
+                                            this->graphicsSettings.resolution,
+                                            this->graphicsSettings.title,
+                                            sf::Style::Titlebar | sf::Style::Close,
+                                            this->graphicsSettings.contextSettings);
+    this->window->setFramerateLimit(this->graphicsSettings.frameRateLimit);
+    this->window->setVerticalSyncEnabled(this->graphicsSettings.verticalSync);
 }
 
 void Game::initKeys()
@@ -68,18 +53,30 @@ void Game::initKeys()
     }
 }
 
+void Game::initStateData()
+{
+    this->stateData.window = this->window;
+    this->stateData.graphicsSettings = &this->graphicsSettings;
+    this->stateData.supportedKeys = &this->supportedKeys;
+    this->stateData.states = &this->states;
+    this->stateData.gridSize = this->gridSize;
+}
+
 void Game::initStates()
 {
     //push main menu state to the states stack, so it will be appeared first while open the app/game
-    this->states.push(new MainMenuState(this->window, &this->supportedKeys, &this->states));
+    this->states.push(new MainMenuState(&this->stateData));
 }
 
 //Constructor
 Game::Game()
 {
     //set all the init functions to the constructor
+    this->initVariables();
+    this->initGraphicsSettings();
     this->initWindow();
     this->initKeys();
+    this->initStateData();
     this->initStates();
 }
 

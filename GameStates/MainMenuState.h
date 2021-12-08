@@ -5,6 +5,7 @@
 #include "EditorState.h"
 #include "SettingsState.h"
 #include "GUI.h"
+#include "GraphicsSettings.h"
 
 class MainMenuState : public State
 {
@@ -22,7 +23,7 @@ private:
     std::map<std::string, gui::Buttons*> buttons;
 
 public:
-    MainMenuState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+    MainMenuState(StateData* state_data);
     virtual ~MainMenuState();
 
     //Functions

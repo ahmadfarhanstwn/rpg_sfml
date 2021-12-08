@@ -3,6 +3,7 @@
 
 #include <State.h>
 #include "GUI.h"
+#include "GraphicsSettings.h"
 
 class SettingsState : public State
 {
@@ -12,16 +13,19 @@ private:
     void initKeyBinds();
     void initFonts();
     void initGui();
+    void initText();
 
     sf::Texture backgroundTexture;
     sf::RectangleShape background;
     sf::Font font;
+    sf::Text optionsText;
 
     std::map<std::string, gui::Buttons*> buttons;
     std::map<std::string, gui::DropDownList*> dropDownLists;
+    std::vector<sf::VideoMode> modes;
 
 public:
-    SettingsState(sf::RenderWindow* window, std::map<std::string, int>* supportedKeys, std::stack<State*>* states);
+    SettingsState(StateData* state_data);
     virtual ~SettingsState();
 
     //Functions

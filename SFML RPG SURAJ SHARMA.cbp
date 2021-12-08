@@ -21,6 +21,7 @@
 					<Add directory="Components" />
 					<Add directory="Tile" />
 					<Add directory="GUI" />
+					<Add directory="Map" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -37,6 +38,7 @@
 					<Add directory="Components" />
 					<Add directory="Tile" />
 					<Add directory="GUI" />
+					<Add directory="Map" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -45,6 +47,8 @@
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
+			<Add option="-Winvalid-pch" />
+			<Add option='-include &quot;stdafx.h&quot;' />
 			<Add option="-DSFML_STATIC" />
 			<Add directory="C:/SFML-2.5.1/include" />
 		</Compiler>
@@ -76,19 +80,28 @@
 		<Unit filename="GameStates/MainMenuState.h" />
 		<Unit filename="GameStates/SettingsState.cpp" />
 		<Unit filename="GameStates/SettingsState.h" />
-		<Unit filename="ResourceFiles/Buttons.cpp" />
-		<Unit filename="ResourceFiles/Buttons.h" />
+		<Unit filename="Map/TileMap.cpp" />
+		<Unit filename="Map/TileMap.h" />
+		<Unit filename="ResourceFiles/GUI.cpp" />
+		<Unit filename="ResourceFiles/GUI.h" />
 		<Unit filename="Tile/Tile.cpp" />
 		<Unit filename="Tile/Tile.h" />
 		<Unit filename="include/Game.h" />
+		<Unit filename="include/GraphicsSettings.h" />
 		<Unit filename="include/State.h">
 			<Option virtualFolder="GameStates/" />
 		</Unit>
+		<Unit filename="include/stdafx.h">
+			<Option compile="1" />
+			<Option weight="0" />
+		</Unit>
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Game.cpp" />
+		<Unit filename="src/GraphicsSettings.cpp" />
 		<Unit filename="src/State.cpp">
 			<Option virtualFolder="GameStates/" />
 		</Unit>
+		<Unit filename="src/stdafx.cpp" />
 		<Extensions>
 			<lib_finder disable_auto="1" />
 		</Extensions>
