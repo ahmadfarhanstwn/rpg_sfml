@@ -10,7 +10,7 @@ protected:
 
 public:
     Tile();
-    Tile(float x, float y, float gridSizeF);
+    Tile(float x, float y, float gridSizeF, const sf::Texture& texture_sheet, const sf::IntRect& texture_rect);
     virtual ~Tile();
 
     void update();

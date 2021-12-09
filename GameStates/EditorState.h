@@ -18,18 +18,22 @@ private:
     void initBackgrounds();
     void initKeyBinds();
     void initFonts();
+    void initText();
     void initPauseMenu();
     void initButtons();
     void initGui();
     void initTileMap();
 
     sf::Font font;
+    sf::IntRect textureRect;
+    sf::Text cursorText;
     PauseMenu* pMenu;
     TileMap* tileMap;
 
     sf::RectangleShape selectorRect;
 
     std::map<std::string, gui::Buttons*> buttons;
+    gui::TextureSelector* textureSelector;
 
 public:
     EditorState(StateData* state_data);

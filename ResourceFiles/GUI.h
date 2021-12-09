@@ -77,6 +77,30 @@ namespace gui
         void update(const sf::Vector2f& mousePos, const float& dt);
         void render(sf::RenderTarget& target);
     };
+
+    class TextureSelector
+    {
+    private:
+        bool active;
+        float gridSize;
+        sf::RectangleShape bounds;
+        sf::Sprite sheet;
+        sf::RectangleShape selector;
+        sf::Vector2u mousePosGrid;
+        sf::IntRect textureRect;
+
+    public:
+        TextureSelector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet);
+        ~TextureSelector();
+
+        //Accessors
+        const bool& getActive() const;
+        const sf::IntRect& getTextureRect() const;
+
+        //Functions
+        void update(const sf::Vector2i& mousePosWindow);
+        void render(sf::RenderTarget& target);
+    };
 }
 
 #endif // BUTTONS_H
