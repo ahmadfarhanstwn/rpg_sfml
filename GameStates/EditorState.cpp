@@ -47,7 +47,8 @@ void EditorState::initPauseMenu()
 {
     this->pMenu = new PauseMenu(*this->window, this->font);
 
-    this->pMenu->addButtons("QUIT", 150.f, "Exit Game");
+    this->pMenu->addButtons("SAVE", 150.f, "Save Map");
+    this->pMenu->addButtons("QUIT", 225.f, "Exit Map");
 }
 
 void EditorState::initButtons()
@@ -57,6 +58,12 @@ void EditorState::initButtons()
 
 void EditorState::initGui()
 {
+    //Sidebar
+    this->sidebar.setSize(sf::Vector2f(30.f, static_cast<float>(this->stateData->graphicsSettings->resolution.height)));
+    this->sidebar.setFillColor(sf::Color(50,50,50,100));
+    this->sidebar.setOutlineColor(sf::Color(200,200,200,150));
+    this->sidebar.setOutlineThickness(1.f);
+
     this->selectorRect.setSize(sf::Vector2f(this->stateData->gridSize, this->stateData->gridSize));
     this->selectorRect.setFillColor(sf::Color(255,255,255,150));
     this->selectorRect.setOutlineThickness(1.f);
@@ -66,12 +73,14 @@ void EditorState::initGui()
     this->selectorRect.setTextureRect(this->textureRect);
 
     //Init Text Selector
-    this->textureSelector = new gui::TextureSelector(20.f, 20.f, 800.f, 200.f, this->stateData->gridSize ,this->tileMap->getTileSheet());
+    this->textureSelector = new gui::TextureSelector(20.f, 20.f, 800.f, 200.f,
+                                                     this->stateData->gridSize ,this->tileMap->getTileSheet(),
+                                                     this->font, "X");
 }
 
 void EditorState::initTileMap()
 {
-    this->tileMap = new TileMap(this->stateData->gridSize, 10,10);
+    this->tileMap = new TileMap(this->stateData->gridSize, 10,10, "Resources/Images/Tiles/tilesheet1.png");
 }
 
 EditorState::EditorState(StateData* state_data) :
@@ -113,19 +122,22 @@ void EditorState::updateEditorInput(const float& dt)
     // Add a tile
     if (sf::Mouse::isButtonPressed(sf::Mouse::Left) && this->getKeytime())
     {
-        if (!this->textureSelector->getActive())
+        if (!this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
         {
-            this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
-        }
-        else
-        {
-            this->textureRect = this->textureSelector->getTextureRect();
+            if (!this->textureSelector->getActive())
+            {
+                this->tileMap->addTile(this->mousePosGrid.x, this->mousePosGrid.y, 0, this->textureRect);
+            }
+            else
+            {
+                this->textureRect = this->textureSelector->getTextureRect();
+            }
         }
     }
     // Remove a tile
     else if (sf::Mouse::isButtonPressed(sf::Mouse::Right) && this->getKeytime())
     {
-        if (!this->textureSelector->getActive())
+        if (!this->textureSelector->getActive() && !this->sidebar.getGlobalBounds().contains(sf::Vector2f(this->mousePosWindow)))
             this->tileMap->removeTile(this->mousePosGrid.x, this->mousePosGrid.y, 0);
     }
 }
@@ -139,7 +151,7 @@ void EditorState::updateButtons()
     }
 }
 
-void EditorState::updateGui()
+void EditorState::updateGui(const float& dt)
 {
     if (!this->textureSelector->getActive())
     {
@@ -153,11 +165,15 @@ void EditorState::updateGui()
     "\n" << this->mousePosGrid.x << "  " << this->mousePosGrid.y <<
     "\n" << this->textureRect.left << "  " << this->textureRect.top;
     this->cursorText.setString(ss.str());
-    this->textureSelector->update(this->mousePosWindow);
+    this->textureSelector->update(this->mousePosWindow, dt);
 }
 
 void EditorState::updatePauseMenuButtons()
 {
+    if (this->pMenu->isPressed("SAVE") && this->getKeytime())
+    {
+        this->tileMap->saveToFile("test.slmp");
+    }
     if (this->pMenu->isPressed("QUIT") && this->getKeytime())
     {
         this->endState();
@@ -173,7 +189,7 @@ void EditorState::update(const float& dt)
     if (!this->paused) //unpaused
     {
         this->updateButtons();
-        this->updateGui();
+        this->updateGui(dt);
         this->updateEditorInput(dt);
     }
     else //paused
@@ -197,6 +213,7 @@ void EditorState::renderGui(sf::RenderTarget& target)
         target.draw(this->selectorRect);
     this->textureSelector->render(target);
     target.draw(this->cursorText);
+    target.draw(this->sidebar);
 }
 
 void EditorState::render(sf::RenderTarget* target)

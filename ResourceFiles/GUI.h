@@ -10,6 +10,7 @@ enum button_states
 
 namespace gui
 {
+    /** ======================= Buttons ======================= **/
     class Buttons
     {
     private:
@@ -54,6 +55,7 @@ namespace gui
         void render(sf::RenderTarget& target);
     };
 
+    /** ======================= DropDownList ======================= **/
     class DropDownList
     {
     private:
@@ -78,10 +80,19 @@ namespace gui
         void render(sf::RenderTarget& target);
     };
 
+    /** ======================= TextureSelector ======================= **/
     class TextureSelector
     {
     private:
         bool active;
+
+        bool hidden;
+        gui::Buttons* hideButton;
+
+        //Keytime
+        float keytime;
+        const float keytimeMax;
+
         float gridSize;
         sf::RectangleShape bounds;
         sf::Sprite sheet;
@@ -90,15 +101,18 @@ namespace gui
         sf::IntRect textureRect;
 
     public:
-        TextureSelector(float x, float y, float width, float height, float grid_size, const sf::Texture* texture_sheet);
+        TextureSelector(float x, float y, float width, float height, float grid_size,
+                        const sf::Texture* texture_sheet, sf::Font& font, std::string text);
         ~TextureSelector();
 
         //Accessors
         const bool& getActive() const;
         const sf::IntRect& getTextureRect() const;
+        const bool getKeytime();
 
         //Functions
-        void update(const sf::Vector2i& mousePosWindow);
+        void updateKeytime(const float& dt);
+        void update(const sf::Vector2i& mousePosWindow, const float& dt);
         void render(sf::RenderTarget& target);
     };
 }
