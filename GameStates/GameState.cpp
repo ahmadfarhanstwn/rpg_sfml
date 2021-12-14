@@ -1,6 +1,26 @@
 #include "stdafx.h"
 #include "GameState.h"
 
+void GameState::initDeferredRender()
+{
+    this->renderTexture.create(this->stateData->graphicsSettings->resolution.width,
+                               this->stateData->graphicsSettings->resolution.height);
+
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
+    this->renderSprite.setTextureRect(sf::IntRect(0,0,
+                                                  this->stateData->graphicsSettings->resolution.width,
+                                                  this->stateData->graphicsSettings->resolution.height));
+}
+
+void GameState::initView()
+{
+    this->view.setSize(sf::Vector2f(this->stateData->graphicsSettings->resolution.width,
+                                    this->stateData->graphicsSettings->resolution.height));
+
+    this->view.setCenter(sf::Vector2f(this->stateData->graphicsSettings->resolution.width / 2.f,
+                                      this->stateData->graphicsSettings->resolution.height / 2.f));
+}
+
 void GameState::initKeyBinds()
 {
     std::ifstream ifs("Config/keybinds.ini");
@@ -45,11 +65,14 @@ void GameState::initPlayers()
 void GameState::initTileMap()
 {
     this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/Images/Tiles/tilesheet1.png");
+    this->tileMap->loadFromFile("test.slmp");
 }
 
 GameState::GameState(StateData* state_data) :
     State(state_data)
 {
+    this->initDeferredRender();
+    this->initView();
     this->initKeyBinds();
     this->initFonts();
     this->initTextures();
@@ -63,6 +86,18 @@ GameState::~GameState()
     delete this->pMenu;
     delete this->player;
     delete this->tileMap;
+}
+
+//Functions
+void GameState::updateTileMap(const float& dt)
+{
+    this->tileMap->update();
+    this->tileMap->updateCollision(this->player);
+}
+
+void GameState::updateView(const float& dt)
+{
+    this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
 }
 
 void GameState::updateInput(const float& dt)
@@ -98,18 +133,20 @@ void GameState::updatePauseMenuButtons()
 
 void GameState::update(const float& dt)
 {
-    this->updateMousePosition();
+    this->updateMousePosition(&this->view);
     this->updateKeytime(dt);
     this->updateInput(dt);
 
     if (!this->paused) //not paused
     {
+        this->updateView(dt);
         this->updatePlayerInput(dt);
         this->player->update(dt);
+        this->updateTileMap(dt);
     }
     else //paused
     {
-        this->pMenu->update(this->mousePosView);
+        this->pMenu->update(this->mousePosWindow);
         this->updatePauseMenuButtons();
     }
 }
@@ -119,13 +156,22 @@ void GameState::render(sf::RenderTarget* target)
     if (!target)
         target = this->window;
 
-//    this->map.render(*target);
+    this->renderTexture.clear();
 
-    this->player->render(*target);
+    this->renderTexture.setView(this->view);
+    this->tileMap->render(this->renderTexture);
+
+    this->player->render(this->renderTexture);
 
     //render pause menu
     if (this->paused)
     {
-        this->pMenu->render(*target);
+        this->renderTexture.setView(this->renderTexture.getDefaultView());
+        this->pMenu->render(this->renderTexture);
     }
+
+    //Final render
+    this->renderTexture.display();
+    this->renderSprite.setTexture(this->renderTexture.getTexture());
+    target->draw(this->renderSprite);
 }

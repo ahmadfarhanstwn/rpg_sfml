@@ -15,6 +15,7 @@ class EditorState : public State
 {
 private:
     void initVariables();
+    void initView();
     void initBackgrounds();
     void initKeyBinds();
     void initFonts();
@@ -23,6 +24,13 @@ private:
     void initButtons();
     void initGui();
     void initTileMap();
+
+    bool collision;
+    short type;
+
+    sf::View view;
+
+    float cameraSpeed;
 
     sf::Font font;
     sf::IntRect textureRect;

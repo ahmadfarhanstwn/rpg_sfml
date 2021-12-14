@@ -34,7 +34,7 @@ public:
 
     //Functions
     void addButtons(std::string key, float y, const std::string text);
-    void update(const sf::Vector2f& mousePos);
+    void update(const sf::Vector2i& mousePosWindow);
     void render(sf::RenderTarget& target);
 };
 
