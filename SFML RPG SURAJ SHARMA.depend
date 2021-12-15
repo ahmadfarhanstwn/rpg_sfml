@@ -602,7 +602,7 @@
 	"stdafx.h"
 	"State.h"
 
-1639484951 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\game.cpp
+1639576367 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\game.cpp
 	"stdafx.h"
 	"Game.h"
 
@@ -611,16 +611,16 @@
 	"PauseMenu.h"
 	"TileMap.h"
 
-1639477026 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
+1639573741 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
 	"stdafx.h"
 	"GameState.h"
 
-1639488369 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.h
+1639576008 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.h
 	"MovementComponent.h"
 	"AnimationComponent.h"
 	"HitboxComponent.h"
 
-1639486740 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.cpp
+1639575554 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\entity.cpp
 	"stdafx.h"
 	"Entity.h"
 
@@ -648,7 +648,7 @@
 	"stdafx.h"
 	"MainMenuState.h"
 
-1639487429 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.h
+1639576032 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.h
 	<Entity.h>
 
 1639487457 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.cpp
@@ -657,7 +657,7 @@
 
 1639488171 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\movementcomponent.h
 
-1638870537 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\movementcomponent.cpp
+1639488218 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\movementcomponent.cpp
 	"stdafx.h"
 	"MovementComponent.h"
 
@@ -673,34 +673,24 @@
 	"PauseMenu.h"
 	"TileMap.h"
 
-1639486800 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\hitboxcomponent.h
+1639488787 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\hitboxcomponent.h
 
-1639486840 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\hitboxcomponent.cpp
+1639572024 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\hitboxcomponent.cpp
 	"stdafx.h"
 	"HitboxComponent.h"
 
-1639475631 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\editorstate.cpp
+1639575452 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\editorstate.cpp
 	"stdafx.h"
 	"EditorState.h"
 
-1639386912 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.h
-	<vector>
-	<iostream>
-	<ctime>
-	<stdlib.h>
-	<fstream>
-	<sstream>
-	<stack>
-	<map>
-	<vector>
-	<string>
+1639576231 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.h
 	"GUI.h"
 
-1639472015 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\tile\tile.cpp
+1639574709 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\tile\tile.cpp
 	"stdafx.h"
 	"Tile.h"
 
-1639471081 d:\study\learn c++ sfml\sfml rpg suraj sharma\tile\tile.h
+1639574697 d:\study\learn c++ sfml\sfml rpg suraj sharma\tile\tile.h
 
 1639386943 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\pausemenu.cpp
 	"stdafx.h"
@@ -717,7 +707,7 @@
 
 1639399216 d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.h
 
-1639399038 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.cpp
+1639575614 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.cpp
 	"stdafx.h"
 	"GUI.h"
 
@@ -765,14 +755,14 @@
 	"SFML/Audio.hpp"
 	"SFML/Network.hpp"
 
-1639476193 d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.h
+1639574884 d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.h
 	"Tile.h"
 	"Entity.h"
 
 1638869338 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\stdafx.cpp
 	"stdafx.h"
 
-1639487049 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.cpp
+1639574900 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.cpp
 	"stdafx.h"
 	"TileMap.h"
 

@@ -50,6 +50,14 @@ const sf::Vector2u Entity::getGridPosition(const unsigned gridSizeU) const
                         static_cast<unsigned>(this->sprite.getPosition().y)/gridSizeU);
 }
 
+const sf::FloatRect Entity::getNextPositionBounds(const float& dt) const
+{
+    if (this->hitboxComponent && this->movementComponent)
+        return this->hitboxComponent->getNextPosition(this->movementComponent->getVelocity() * dt);
+
+    return sf::FloatRect(-1.f,-1.f,-1.f,-1.f);
+}
+
 //Functions
 void Entity::setTexture(sf::Texture& texture)
 {

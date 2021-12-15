@@ -5,6 +5,10 @@
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
 
+class MovementComponent;
+class AnimationComponent;
+class HitboxComponent;
+
 class Entity
 {
 private:
@@ -28,6 +32,7 @@ public:
     virtual const sf::Vector2f& getPosition() const;
     virtual const sf::FloatRect getGlobalBounds() const;
     virtual const sf::Vector2u getGridPosition(const unsigned gridSizeU) const;
+    virtual const sf::FloatRect getNextPositionBounds(const float& dt) const;
 
     //Functions
     virtual void setPosition(const float x, const float y);

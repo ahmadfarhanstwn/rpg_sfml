@@ -13,10 +13,10 @@ void EditorState::initVariables()
 
 void EditorState::initView()
 {
-    this->view.setSize(sf::Vector2f(this->stateData->graphicsSettings->resolution.width,
-                                    this->stateData->graphicsSettings->resolution.height));
-    this->view.setCenter(this->stateData->graphicsSettings->resolution.width/2.f,
-                         this->stateData->graphicsSettings->resolution.height/2.f);
+    this->view.setSize(sf::Vector2f(static_cast<float>(this->stateData->graphicsSettings->resolution.width),
+                                    static_cast<float>(this->stateData->graphicsSettings->resolution.height)));
+    this->view.setCenter(static_cast<float>(this->stateData->graphicsSettings->resolution.width)/2.f,
+                         static_cast<float>(this->stateData->graphicsSettings->resolution.height)/2.f);
 }
 
 void EditorState::initBackgrounds()

@@ -18,7 +18,7 @@ protected:
 
 public:
     Tile();
-    Tile(unsigned x, unsigned y, float gridSizeF, const sf::Texture& texture_sheet,
+    Tile(int x, int y, float gridSizeF, const sf::Texture& texture_sheet,
          const sf::IntRect& texture_rect, bool collision = false, short type = TileTypes::DEFAULT);
     virtual ~Tile();
 
@@ -26,8 +26,10 @@ public:
     const std::string getAsString() const;
     const sf::Vector2f& getPosition() const;
     const bool& getCollision() const;
+    const sf::FloatRect getGlobalBounds() const;
 
     //Functions
+    const bool intersects(const sf::FloatRect bounds) const;
     void update();
     void render(sf::RenderTarget& target);
 };

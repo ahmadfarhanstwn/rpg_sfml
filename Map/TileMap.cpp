@@ -3,11 +3,11 @@
 
 void TileMap::clear()
 {
-    for (size_t x = 0; x < this->maxSizeWorldGrid.x; x++)
+    for (int x = 0; x < this->maxSizeWorldGrid.x; x++)
     {
-        for (size_t y = 0; y < this->maxSizeWorldGrid.y; y++)
+        for (int y = 0; y < this->maxSizeWorldGrid.y; y++)
         {
-            for (size_t z = 0; z < this->layers; z++)
+            for (int z = 0; z < this->layers; z++)
             {
                 delete this->maps[x][y][z];
                 this->maps[x][y][z] = nullptr;
@@ -19,10 +19,10 @@ void TileMap::clear()
     this->maps.clear();
 }
 
-TileMap::TileMap(float grid_size, unsigned width, unsigned height, std::string texture_file)
+TileMap::TileMap(float grid_size, int width, int height, std::string texture_file)
 {
     this->gridSizeF = grid_size;
-    this->gridSizeU = static_cast<unsigned>(this->gridSizeF);
+    this->gridSizeI = static_cast<int>(this->gridSizeF);
     this->maxSizeWorldGrid.x = width;
     this->maxSizeWorldGrid.y = height;
     this->maxSizeWorldF.x = static_cast<float>(width) * grid_size;
@@ -41,12 +41,12 @@ TileMap::TileMap(float grid_size, unsigned width, unsigned height, std::string t
     this->layer = 0;
 
     this->maps.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<Tile*>>());
-    for (size_t x = 0; x < this->maxSizeWorldGrid.x; x++)
+    for (int x = 0; x < this->maxSizeWorldGrid.x; x++)
     {
-        for (size_t y = 0; y < this->maxSizeWorldGrid.y; y++)
+        for (int y = 0; y < this->maxSizeWorldGrid.y; y++)
         {
             this->maps[x].resize(this->maxSizeWorldGrid.y, std::vector<Tile*> ());
-            for (size_t z = 0; z < this->layers; z++)
+            for (int z = 0; z < this->layers; z++)
             {
                 this->maps[x][y].resize(this->layers, nullptr);
             }
@@ -90,7 +90,7 @@ void TileMap::saveToFile(const std::string file_name)
      if (out_file.is_open())
      {
          out_file << this->maxSizeWorldGrid.x << " " << this->maxSizeWorldGrid.y << "\n"
-         << this->gridSizeU << "\n"
+         << this->gridSizeI << "\n"
          << this->layers << "\n"
          << this->textureFile << "\n";
 
@@ -123,14 +123,14 @@ void TileMap::loadFromFile(const std::string file_name)
      if (in_file.is_open())
      {
         sf::Vector2u size;
-        unsigned gridSize = 0;
-        unsigned layers = 0;
+        int gridSize = 0;
+        int layers = 0;
         std::string textureFiles = "";
-        unsigned x = 0;
-        unsigned y = 0;
-        unsigned z = 0;
-        unsigned trX = 0;
-        unsigned trY = 0;
+        int x = 0;
+        int y = 0;
+        int z = 0;
+        int trX = 0;
+        int trY = 0;
         bool collision = false;
         short type = 0;
 
@@ -139,7 +139,7 @@ void TileMap::loadFromFile(const std::string file_name)
 
         //Tiles
         this->gridSizeF = static_cast<float>(gridSize);
-        this->gridSizeU = gridSize;
+        this->gridSizeI = gridSize;
         this->maxSizeWorldGrid.x = size.x;
         this->maxSizeWorldGrid.y = size.y;
         this->layers = layers;
@@ -148,12 +148,12 @@ void TileMap::loadFromFile(const std::string file_name)
         this->clear();
 
         this->maps.resize(this->maxSizeWorldGrid.x, std::vector<std::vector<Tile*>>());
-        for (size_t x = 0; x < this->maxSizeWorldGrid.x; x++)
+        for (int x = 0; x < this->maxSizeWorldGrid.x; x++)
         {
-            for (size_t y = 0; y < this->maxSizeWorldGrid.y; y++)
+            for (int y = 0; y < this->maxSizeWorldGrid.y; y++)
             {
                 this->maps[x].resize(this->maxSizeWorldGrid.y, std::vector<Tile*> ());
-                for (size_t z = 0; z < this->layers; z++)
+                for (int z = 0; z < this->layers; z++)
                 {
                     this->maps[x][y].resize(this->layers, nullptr);
                 }
@@ -167,7 +167,7 @@ void TileMap::loadFromFile(const std::string file_name)
 
         while(in_file >> x >> y >> z >> trX >> trY >> collision >> type)
         {
-            this->maps[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileSheet, sf::IntRect(trX, trY, this->gridSizeU, this->gridSizeU), collision, type);
+            this->maps[x][y][z] = new Tile(x, y, this->gridSizeF, this->tileSheet, sf::IntRect(trX, trY, this->gridSizeI, this->gridSizeI), collision, type);
         }
 
      }
@@ -179,7 +179,7 @@ void TileMap::loadFromFile(const std::string file_name)
      in_file.close();
 }
 
-void TileMap::updateCollision(Entity* entity)
+void TileMap::updateCollision(Entity* entity, const float& dt)
 {
     //WORLD BOUNDS
     if(entity->getPosition().x < 0.f)
@@ -204,51 +204,101 @@ void TileMap::updateCollision(Entity* entity)
     }
 
     //TILES
-    this->fromX = entity->getGridPosition(this->gridSizeU).x - 2;
+    this->layer = 0;
+
+    this->fromX = entity->getGridPosition(this->gridSizeI).x - 1;
     if(this->fromX < 0)
     {
         this->fromX = 0;
     }
-    else if (this->fromX >= this->maxSizeWorldGrid.x)
+    else if (this->fromX > this->maxSizeWorldGrid.x)
     {
-        this->fromX = this->maxSizeWorldGrid.x - 1;
+        this->fromX = this->maxSizeWorldGrid.x;
     }
 
-    this->toX = entity->getGridPosition(this->gridSizeU).y + 1;
+    this->toX = entity->getGridPosition(this->gridSizeI).x + 3;
     if(this->toX < 0)
     {
         this->toX = 0;
     }
-    else if (this->toX >= this->maxSizeWorldGrid.x)
+    else if (this->toX > this->maxSizeWorldGrid.x)
     {
-        this->toX = this->maxSizeWorldGrid.x - 1;
+        this->toX = this->maxSizeWorldGrid.x;
     }
 
-    this->fromY = entity->getGridPosition(this->gridSizeU). - 2;
+    this->fromY = entity->getGridPosition(this->gridSizeI).y - 1;
     if(this->fromY < 0)
     {
         this->fromY = 0;
     }
-    else if (this->fromY >= this->maxSizeWorldGrid.y)
+    else if (this->fromY > this->maxSizeWorldGrid.y)
     {
-        this->fromY = this->maxSizeWorldGrid.y - 1;
+        this->fromY = this->maxSizeWorldGrid.y;
     }
 
-    this->toY = entity->getGridPosition(this->gridSizeU).y + 1;
+    this->toY = entity->getGridPosition(this->gridSizeI).y + 3;
     if(this->toY < 0)
     {
         this->toY = 0;
     }
-    else if (this->toY >= this->maxSizeWorldGrid.y)
+    else if (this->toY > this->maxSizeWorldGrid.y)
     {
-        this->toY = this->maxSizeWorldGrid.y - 1;
+        this->toY = this->maxSizeWorldGrid.y;
     }
 
-    for (size_t x = this->fromX; x < this->toX; x++)
+    //COLLISION
+    for (int x = this->fromX; x < this->toX; x++)
     {
-        for (size_t y = this->fromY; y < this->toY; y++)
+        for (int y = this->fromY; y < this->toY; y++)
         {
+            sf::FloatRect playerBounds = entity->getGlobalBounds();
+            sf::FloatRect wallBounds = this->maps[x][y][this->layer]->getGlobalBounds();
+            sf::FloatRect nextPositionBounds = entity->getNextPositionBounds(dt);
 
+            if (this->maps[x][y][this->layer]->intersects(nextPositionBounds)
+                && this->maps[x][y][this->layer]->getCollision())
+            {
+                //Bottom Collision
+                if (playerBounds.top < wallBounds.top
+                    && playerBounds.top + playerBounds.height < wallBounds.top + wallBounds.height
+                    && playerBounds.left < wallBounds.left + wallBounds.width
+                    && playerBounds.left + playerBounds.width > wallBounds.left
+                    )
+                {
+                    entity->stopVelocityY();
+                    entity->setPosition(playerBounds.left, wallBounds.top - playerBounds.height);
+                }
+                //Top Collision
+                else if (playerBounds.top > wallBounds.top
+                    && playerBounds.top + playerBounds.height > wallBounds.top + wallBounds.height
+                    && playerBounds.left < wallBounds.left + wallBounds.width
+                    && playerBounds.left + playerBounds.width > wallBounds.left
+                    )
+                {
+                    entity->stopVelocityY();
+                    entity->setPosition(playerBounds.left, wallBounds.top + wallBounds.height);
+                }
+                //Right Collision
+                if (playerBounds.left < wallBounds.left
+                    && playerBounds.left + playerBounds.width < wallBounds.left + wallBounds.width
+                    && playerBounds.top < wallBounds.top + wallBounds.height
+                    && playerBounds.top + playerBounds.height > wallBounds.top
+                         )
+                {
+                    entity->stopVelocityX();
+                    entity->setPosition(wallBounds.left - playerBounds.width, playerBounds.top);
+                }
+                //Left Collision
+                else if (playerBounds.left > wallBounds.left
+                         && playerBounds.left + playerBounds.width > wallBounds.left + wallBounds.width
+                         && playerBounds.top < wallBounds.top + wallBounds.height
+                         && playerBounds.top + playerBounds.height > wallBounds.top
+                         )
+                {
+                    entity->stopVelocityX();
+                    entity->setPosition(wallBounds.left + wallBounds.width, playerBounds.top);
+                }
+            }
         }
     }
 }
@@ -280,7 +330,7 @@ void TileMap::render(sf::RenderTarget& target, Entity* entity)
     }
 }
 
-void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, sf::IntRect& texture_rect, const bool collision, const short type)
+void TileMap::addTile(const int x, const int y, const int z, sf::IntRect& texture_rect, const bool collision, const short type)
 {
     /* Take three parameters and add a tile to the position if available */
     if (x < this->maxSizeWorldGrid.x && x >= 0 &&
@@ -296,7 +346,7 @@ void TileMap::addTile(const unsigned x, const unsigned y, const unsigned z, sf::
     }
 }
 
-void TileMap::removeTile(const unsigned x, const unsigned y, const unsigned z)
+void TileMap::removeTile(const int x, const int y, const int z)
 {
     /* Take three parameters and remove a tile from the position if available */
     if (x < this->maxSizeWorldGrid.x && x >= 0 &&
