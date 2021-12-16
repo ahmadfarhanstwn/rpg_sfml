@@ -31,6 +31,7 @@ private:
     sf::View view;
 
     float cameraSpeed;
+    int layer;
 
     sf::Font font;
     sf::IntRect textureRect;

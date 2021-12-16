@@ -4,7 +4,8 @@
 enum TileTypes
 {
     DEFAULT,
-    DAMAGING
+    DAMAGING,
+    DOODAD
 };
 
 class Tile
@@ -27,6 +28,7 @@ public:
     const sf::Vector2f& getPosition() const;
     const bool& getCollision() const;
     const sf::FloatRect getGlobalBounds() const;
+    const short& getType() const;
 
     //Functions
     const bool intersects(const sf::FloatRect bounds) const;

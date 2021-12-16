@@ -74,9 +74,9 @@ void MovementComponent::stopVelocityY()
 void MovementComponent::move(const float dir_x, const float dir_y, const float& dt)
 {
     //Accelerating
-    this->velocity.x += this->acceleration * dir_x;
+    this->velocity.x += this->acceleration * dir_x * dt;
 
-    this->velocity.y += this->acceleration * dir_y;
+    this->velocity.y += this->acceleration * dir_y * dt;
 }
 
 void MovementComponent::update(const float& dt)
@@ -90,7 +90,7 @@ void MovementComponent::update(const float& dt)
         }
 
         //decelerating
-        this->velocity.x -= this->deceleration;
+        this->velocity.x -= this->deceleration * dt;
         if (this->velocity.x < 0.f)
         {
             this->velocity.x = 0.f;
@@ -105,7 +105,7 @@ void MovementComponent::update(const float& dt)
         }
 
         //decelerating
-        this->velocity.x += this->deceleration;
+        this->velocity.x += this->deceleration * dt;
         if (this->velocity.x > 0.f)
         {
             this->velocity.x = 0.f;
@@ -121,7 +121,7 @@ void MovementComponent::update(const float& dt)
         }
 
         //decelerating
-        this->velocity.y -= this->deceleration;
+        this->velocity.y -= this->deceleration * dt;
         if (this->velocity.y < 0.f)
         {
             this->velocity.y = 0.f;
@@ -136,7 +136,7 @@ void MovementComponent::update(const float& dt)
         }
 
         //decelerating
-        this->velocity.y += this->deceleration;
+        this->velocity.y += this->deceleration * dt;
         if (this->velocity.y > 0.f)
         {
             this->velocity.y = 0.f;

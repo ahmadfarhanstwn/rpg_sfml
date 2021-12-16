@@ -17,7 +17,7 @@ private:
     int layers;
     sf::Texture tileSheet;
     std::string textureFile; //the name of file for texture
-    std::vector<std::vector<std::vector<Tile*>>> maps;
+    std::vector<std::vector<std::vector<std::vector<Tile*>>>> maps;
 
     sf::RectangleShape collisionBox;
 
@@ -36,7 +36,7 @@ public:
 
     //Accessors
     const sf::Texture* getTileSheet() const;
-
+    const int getLayerSize(const int x, const int y, const int layer) const;
 
     //Functions
     void saveToFile(const std::string file_name);
@@ -45,7 +45,7 @@ public:
     void updateCollision(Entity* entity, const float& dt);
 
     void update();
-    void render(sf::RenderTarget& target, Entity* entity = nullptr);
+    void render(sf::RenderTarget& target, sf::Vector2i gridPosition);
 
     void addTile(const int x, const int y, const int z, sf::IntRect& texture_rect, const bool collision, const short type);
     void removeTile(const int x, const int y, const int z);
