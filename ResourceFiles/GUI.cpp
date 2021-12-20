@@ -340,6 +340,9 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
         target.draw(this->bounds);
         target.draw(this->sheet);
         target.draw(this->selector);
+
+        if(this->active)
+            target.draw(this->selector);
     }
 
     this->hideButton->render(target);

@@ -18,6 +18,7 @@ private:
     sf::Texture tileSheet;
     std::string textureFile; //the name of file for texture
     std::vector<std::vector<std::vector<std::vector<Tile*>>>> maps;
+    std::stack<Tile*> deferredRenderStack;
 
     sf::RectangleShape collisionBox;
 
@@ -44,11 +45,12 @@ public:
 
     void updateCollision(Entity* entity, const float& dt);
 
-    void update();
-    void render(sf::RenderTarget& target, sf::Vector2i gridPosition);
-
     void addTile(const int x, const int y, const int z, sf::IntRect& texture_rect, const bool collision, const short type);
     void removeTile(const int x, const int y, const int z);
+
+    void update();
+    void renderDeferred(sf::RenderTarget& target);
+    void render(sf::RenderTarget& target, sf::Vector2i gridPosition);
 };
 
 #endif // TILEMAP_H

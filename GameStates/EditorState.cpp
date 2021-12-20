@@ -288,6 +288,7 @@ void EditorState::render(sf::RenderTarget* target)
 
     target->setView(this->view);
     this->tileMap->render(*target, this->mousePosGrid);
+    this->tileMap->renderDeferred(*target);
 
     target->setView(this->view);
     this->renderButtons(*target);

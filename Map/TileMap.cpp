@@ -330,6 +330,35 @@ void TileMap::updateCollision(Entity* entity, const float& dt)
     }
 }
 
+void TileMap::addTile(const int x, const int y, const int z, sf::IntRect& texture_rect, const bool collision, const short type)
+{
+    /* Take three parameters and add a tile to the position if available */
+    if (x < this->maxSizeWorldGrid.x && x >= 0 &&
+        y < this->maxSizeWorldGrid.y && y >= 0 &&
+        z < this->layers && z >= 0)
+    {
+        /* OK TO ADD TILE */
+        this->maps[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect, collision, type));
+    }
+}
+
+void TileMap::removeTile(const int x, const int y, const int z)
+{
+    /* Take three parameters and remove a tile from the position if available */
+    if (x < this->maxSizeWorldGrid.x && x >= 0 &&
+        y < this->maxSizeWorldGrid.y && y >= 0 &&
+        z < this->layers && z >= 0)
+    {
+        /* Check if the maps in that position is not null */
+        if (!this->maps[x][y][z].empty())
+        {
+            // Ok to remove
+            delete this->maps[x][y][z][this->maps[x][y][z].size()-1];
+            this->maps[x][y][z].pop_back();
+        }
+    }
+}
+
 void TileMap::update()
 {
 
@@ -387,7 +416,7 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
             {
                 if (this->maps[x][y][this->layer][k]->getType() == TileTypes::DOODAD)
                 {
-                    //START FROM HERE
+                    this->deferredRenderStack.push(this->maps[x][y][this->layer][k]);
                 }
                 else
                 {
@@ -403,31 +432,11 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
     }
 }
 
-void TileMap::addTile(const int x, const int y, const int z, sf::IntRect& texture_rect, const bool collision, const short type)
+void TileMap::renderDeferred(sf::RenderTarget& target)
 {
-    /* Take three parameters and add a tile to the position if available */
-    if (x < this->maxSizeWorldGrid.x && x >= 0 &&
-        y < this->maxSizeWorldGrid.y && y >= 0 &&
-        z < this->layers && z >= 0)
+    while(!this->deferredRenderStack.empty())
     {
-        /* OK TO ADD TILE */
-        this->maps[x][y][z].push_back(new Tile(x, y, this->gridSizeF, this->tileSheet, texture_rect, collision, type));
-    }
-}
-
-void TileMap::removeTile(const int x, const int y, const int z)
-{
-    /* Take three parameters and remove a tile from the position if available */
-    if (x < this->maxSizeWorldGrid.x && x >= 0 &&
-        y < this->maxSizeWorldGrid.y && y >= 0 &&
-        z < this->layers && z >= 0)
-    {
-        /* Check if the maps in that position is not null */
-        if (!this->maps[x][y][z].empty())
-        {
-            // Ok to remove
-            delete this->maps[x][y][z][this->maps[x][y][z].size()-1];
-            this->maps[x][y][z].pop_back();
-        }
+        this->deferredRenderStack.top()->render(target);
+        this->deferredRenderStack.pop();
     }
 }
