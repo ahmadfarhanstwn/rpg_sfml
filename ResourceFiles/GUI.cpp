@@ -227,6 +227,7 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
     this->gridSize = grid_size;
     this->active = false;
     this->hidden = false;
+    float offset = grid_size;
 
     this->bounds.setSize(sf::Vector2f(width,height));
     this->bounds.setPosition(x + 60,y);

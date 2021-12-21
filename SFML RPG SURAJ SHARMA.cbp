@@ -74,6 +74,8 @@
 		<Unit filename="Entities/Player.h" />
 		<Unit filename="GUI/PauseMenu.cpp" />
 		<Unit filename="GUI/PauseMenu.h" />
+		<Unit filename="GUI/PlayerGUI.cpp" />
+		<Unit filename="GUI/PlayerGUI.h" />
 		<Unit filename="GameStates/EditorState.cpp" />
 		<Unit filename="GameStates/EditorState.h" />
 		<Unit filename="GameStates/GameState.cpp" />

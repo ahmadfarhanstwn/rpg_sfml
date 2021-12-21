@@ -74,11 +74,11 @@ const sf::Texture* TileMap::getTileSheet() const
 
 const int TileMap::getLayerSize(const int x, const int y, const int layer) const
 {
-    if (x >= 0 && x < this->maps.size())
+    if (x >= 0 && x < static_cast<int>(this->maps.size()))
     {
-        if (y >= 0 && y < this->maps[x].size())
+        if (y >= 0 && y < static_cast<int>(this->maps[x].size()))
         {
-            if (layer >= 0 && layer < this->maps[x][y].size())
+            if (layer >= 0 && layer < static_cast<int>(this->maps[x][y].size()))
             {
                 return this->maps[x][y][layer].size();
             }

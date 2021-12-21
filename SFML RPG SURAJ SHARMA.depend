@@ -602,7 +602,7 @@
 	"stdafx.h"
 	"State.h"
 
-1639576367 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\game.cpp
+1640080846 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\game.cpp
 	"stdafx.h"
 	"Game.h"
 
@@ -612,7 +612,7 @@
 	"TileMap.h"
 	"PlayerGUI.h"
 
-1640011054 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
+1640092568 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gamestates\gamestate.cpp
 	"stdafx.h"
 	"GameState.h"
 
@@ -650,10 +650,10 @@
 	"stdafx.h"
 	"MainMenuState.h"
 
-1639994866 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.h
+1640078674 d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.h
 	<Entity.h>
 
-1639994916 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.cpp
+1640080269 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\entities\player.cpp
 	"stdafx.h"
 	"Player.h"
 
@@ -709,7 +709,7 @@
 
 1639399216 d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.h
 
-1639834932 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.cpp
+1640080829 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\resourcefiles\gui.cpp
 	"stdafx.h"
 	"GUI.h"
 
@@ -764,7 +764,7 @@
 1638869338 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\src\stdafx.cpp
 	"stdafx.h"
 
-1639748759 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.cpp
+1640092998 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\map\tilemap.cpp
 	"stdafx.h"
 	"TileMap.h"
 
@@ -774,12 +774,15 @@
 	"stdafx.h"
 	"GraphicsSettings.h"
 
-1639993791 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\attributecomponent.h
+1640092749 d:\study\learn c++ sfml\sfml rpg suraj sharma\components\attributecomponent.h
 
-1640012204 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\playergui.h
+1640094070 d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\playergui.h
 	"Player.h"
 
-1639994733 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\attributecomponent.cpp
+1640092798 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\components\attributecomponent.cpp
 	"AttributeComponent.h"
 	"stdafx.h"
+
+1640092187 source:d:\study\learn c++ sfml\sfml rpg suraj sharma\gui\playergui.cpp
+	"PlayerGUI.h"
 
