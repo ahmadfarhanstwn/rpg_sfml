@@ -364,11 +364,11 @@ void TileMap::update()
 
 }
 
-void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
+void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition, const bool show_collision)
 {
     this->layer = 0;
 
-    this->fromX = gridPosition.x - 4;
+    this->fromX = gridPosition.x - 12;
     if(this->fromX < 0)
     {
         this->fromX = 0;
@@ -378,7 +378,7 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
         this->fromX = this->maxSizeWorldGrid.x;
     }
 
-    this->toX = gridPosition.x + 5;
+    this->toX = gridPosition.x + 13;
     if(this->toX < 0)
     {
         this->toX = 0;
@@ -388,7 +388,7 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
         this->toX = this->maxSizeWorldGrid.x;
     }
 
-    this->fromY = gridPosition.y - 3;
+    this->fromY = gridPosition.y - 8;
     if(this->fromY < 0)
     {
         this->fromY = 0;
@@ -398,7 +398,7 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
         this->fromY = this->maxSizeWorldGrid.y;
     }
 
-    this->toY = gridPosition.y + 5;
+    this->toY = gridPosition.y + 10;
     if(this->toY < 0)
     {
         this->toY = 0;
@@ -422,10 +422,13 @@ void TileMap::render(sf::RenderTarget& target, sf::Vector2i gridPosition)
                 {
                     this->maps[x][y][this->layer][k]->render(target);
                 }
-                if (this->maps[x][y][this->layer][k]->getCollision())
+                if (show_collision)
                 {
-                    this->collisionBox.setPosition(this->maps[x][y][this->layer][k]->getPosition());
-                    target.draw(this->collisionBox);
+                    if (this->maps[x][y][this->layer][k]->getCollision())
+                    {
+                        this->collisionBox.setPosition(this->maps[x][y][this->layer][k]->getPosition());
+                        target.draw(this->collisionBox);
+                    }
                 }
             }
         }

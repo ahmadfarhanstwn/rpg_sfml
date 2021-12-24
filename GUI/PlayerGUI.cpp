@@ -7,11 +7,11 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHpBar()
 {
-    float width = 300.f;
-    float height = 50.f;
+    float width = gui::p2pX(21.3f, vm);
+    float height = gui::p2pY(6.5f, vm);
     this->hpBarMaxWidth = width;
-    float x = 20.f;
-    float y = 20.f;
+    float x = gui::p2pX(1.4f, vm);
+    float y = gui::p2pY(2.6f, vm);
 
     this->hpBarBack.setSize(sf::Vector2f(width,height));
     this->hpBarBack.setFillColor(sf::Color(50,50,50,200));
@@ -22,16 +22,18 @@ void PlayerGUI::initHpBar()
     this->hpBarInside.setPosition(this->hpBarBack.getPosition());
 
     this->hpBarText.setFont(this->font);
-    this->hpBarText.setPosition(this->hpBarBack.getPosition().x + 10.f, this->hpBarBack.getPosition().y + 5.f);
+    this->hpBarText.setPosition(this->hpBarBack.getPosition().x + gui::p2pX(0.73f,vm),
+                                this->hpBarBack.getPosition().y + gui::p2pY(0.65f,vm));
+    this->hpBarText.setCharacterSize(gui::calcCharSize(vm, 90));
 }
 
 void PlayerGUI::initExpBar()
 {
-    float width = 200.f;
-    float height = 30.f;
+    float width = gui::p2pX(13.6f, vm);
+    float height = gui::p2pY(3.9f, vm);
     this->expBarMaxWidth = width;
-    float x = 20.f;
-    float y = 85.f;
+    float x = gui::p2pX(1.4f, vm);
+    float y = gui::p2pY(11.f, vm);
 
     this->expBarBack.setSize(sf::Vector2f(width,height));
     this->expBarBack.setFillColor(sf::Color(50,50,50,200));
@@ -42,28 +44,30 @@ void PlayerGUI::initExpBar()
     this->expBarInside.setPosition(this->expBarBack.getPosition());
 
     this->expBarText.setFont(this->font);
-    this->expBarText.setPosition(this->expBarBack.getPosition().x + 10.f, this->expBarBack.getPosition().y + 5.f);
-    this->expBarText.setCharacterSize(12);
+    this->expBarText.setPosition(this->expBarBack.getPosition().x + gui::p2pX(0.73f,vm),
+                                 this->expBarBack.getPosition().y + gui::p2pY(0.65f,vm));
+    this->expBarText.setCharacterSize(gui::calcCharSize(vm,90));
 }
 
 void PlayerGUI::initLevelBar()
 {
-    float width = 30.f;
-    float height = 30.f;
+    float width = gui::p2pX(2.1f, vm);
+    float height = gui::p2pY(3.9f, vm);
     this->levelBarMaxWidth = width;
-    float x = 20.f;
-    float y = 120.f;
+    float x = gui::p2pX(1.4f, vm);
+    float y = gui::p2pY(15.6f, vm);
 
     this->levelBarBack.setSize(sf::Vector2f(width,height));
     this->levelBarBack.setFillColor(sf::Color(50,50,50,200));
     this->levelBarBack.setPosition(x, y);
 
     this->levelBarText.setFont(this->font);
-    this->levelBarText.setPosition(this->levelBarBack.getPosition().x + 10.f, this->levelBarBack.getPosition().y + 5.f);
-    this->levelBarText.setCharacterSize(12);
+    this->levelBarText.setPosition(this->levelBarBack.getPosition().x + gui::p2pX(0.73f,vm),
+                                   this->levelBarBack.getPosition().y + gui::p2pY(0.65f,vm));
+    this->levelBarText.setCharacterSize(gui::calcCharSize(vm, 90));
 }
 
-PlayerGUI::PlayerGUI(Player* player)
+PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm) : vm(vm)
 {
     this->player = player;
 

@@ -11,10 +11,10 @@ class MainMenuState : public State
 {
 private:
     void initVariables();
-    void initBackgrounds();
     void initKeyBinds();
     void initFonts();
-    void initButtons();
+    void initGui();
+    void resetGui();
 
     sf::Texture backgroundTexture;
     sf::RectangleShape background;

@@ -58,11 +58,13 @@ void EditorState::initText()
 
 void EditorState::initPauseMenu()
 {
-    this->pMenu = new PauseMenu(*this->window, this->font);
+    sf::VideoMode& vm = this->stateData->graphicsSettings->resolution;
 
-    this->pMenu->addButtons("SAVE", 150.f, "Save Map");
-    this->pMenu->addButtons("LOAD", 225.f, "Load Map");
-    this->pMenu->addButtons("QUIT", 300.f, "Exit Map");
+    this->pMenu = new PauseMenu(this->stateData->graphicsSettings->resolution, this->font);
+
+    this->pMenu->addButtons("SAVE", gui::p2pY(19.5f, vm), gui::p2pX(18.3f, vm),gui::p2pY(3.2f, vm), gui::calcCharSize(vm), "Save Map");
+    this->pMenu->addButtons("LOAD", gui::p2pY(29.2f, vm), gui::p2pX(18.3f, vm),gui::p2pY(3.2f, vm), gui::calcCharSize(vm), "Load Map");
+    this->pMenu->addButtons("QUIT", gui::p2pY(39.f, vm), gui::p2pX(18.3f, vm),gui::p2pY(3.2f, vm), gui::calcCharSize(vm), "Exit Map");
 }
 
 void EditorState::initButtons()
@@ -94,7 +96,7 @@ void EditorState::initGui()
 
 void EditorState::initTileMap()
 {
-    this->tileMap = new TileMap(this->stateData->gridSize, 10,10, "Resources/Images/Tiles/tilesheet1.png");
+    this->tileMap = new TileMap(this->stateData->gridSize, 10,10, "Resources/Images/Tiles/tilesheet3.png");
 }
 
 EditorState::EditorState(StateData* state_data) :
@@ -287,7 +289,7 @@ void EditorState::render(sf::RenderTarget* target)
         target = this->window;
 
     target->setView(this->view);
-    this->tileMap->render(*target, this->mousePosGrid);
+    this->tileMap->render(*target, this->mousePosGrid, true);
     this->tileMap->renderDeferred(*target);
 
     target->setView(this->view);

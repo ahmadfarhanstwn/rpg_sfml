@@ -9,11 +9,10 @@ class SettingsState : public State
 {
 private:
     void initVariables();
-    void initBackgrounds();
     void initKeyBinds();
     void initFonts();
     void initGui();
-    void initText();
+    void resetGui();
 
     sf::Texture backgroundTexture;
     sf::RectangleShape background;

@@ -50,7 +50,7 @@ public:
 
     void update();
     void renderDeferred(sf::RenderTarget& target);
-    void render(sf::RenderTarget& target, sf::Vector2i gridPosition);
+    void render(sf::RenderTarget& target, sf::Vector2i gridPosition, const bool show_collision = false);
 };
 
 #endif // TILEMAP_H

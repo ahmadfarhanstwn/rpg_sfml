@@ -88,6 +88,8 @@
 		<Unit filename="Map/TileMap.h" />
 		<Unit filename="ResourceFiles/GUI.cpp" />
 		<Unit filename="ResourceFiles/GUI.h" />
+		<Unit filename="ResourceFiles/fragment_shader.frag" />
+		<Unit filename="ResourceFiles/vertex_shader.vert" />
 		<Unit filename="Tile/Tile.cpp" />
 		<Unit filename="Tile/Tile.h" />
 		<Unit filename="include/Game.h" />

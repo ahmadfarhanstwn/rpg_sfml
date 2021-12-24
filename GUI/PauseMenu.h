@@ -16,7 +16,7 @@ private:
     std::map<std::string, gui::Buttons*> buttons;
 
 public:
-    PauseMenu(sf::RenderWindow& window, sf::Font& font);
+    PauseMenu(sf::VideoMode& vm, sf::Font& font);
     virtual ~PauseMenu();
 
     //Accessors
@@ -24,7 +24,8 @@ public:
     const bool   isPressed(const std::string key);
 
     //Functions
-    void addButtons(std::string key, float y, const std::string text);
+    void addButtons(std::string key, float y, const float width, const float height,
+                    const unsigned char_size, const std::string text);
     void update(const sf::Vector2i& mousePosWindow);
     void render(sf::RenderTarget& target);
 };

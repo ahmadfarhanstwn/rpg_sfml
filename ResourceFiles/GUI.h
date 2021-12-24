@@ -10,6 +10,9 @@ enum button_states
 
 namespace gui
 {
+    const float p2pX(const float perc, sf::VideoMode& vm);
+    const float p2pY(const float perc, sf::VideoMode& vm);
+    const unsigned calcCharSize(sf::VideoMode& vm, const unsigned modifier = 43);
     /** ======================= Buttons ======================= **/
     class Buttons
     {

@@ -2,6 +2,7 @@
 #define PLAYERGUI_H
 
 #include "Player.h"
+#include "GUI.h"
 
 class Player;
 class sf::RectangleShape;
@@ -12,6 +13,8 @@ private:
     Player* player;
 
     sf::Font font;
+
+    sf::VideoMode& vm;
 
     //Hp Bar
     std::string hpBarString;
@@ -39,7 +42,7 @@ private:
     void initLevelBar();
 
 public:
-    PlayerGUI(Player* player);
+    PlayerGUI(Player* player, sf::VideoMode& vm);
     virtual ~PlayerGUI();
 
     //Functions

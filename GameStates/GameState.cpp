@@ -46,15 +46,25 @@ void GameState::initFonts()
 
 void GameState::initTextures()
 {
-    if(!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/PLAYER_SHEET.png"))
+    if(!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/PLAYER_SHEET2.png"))
         throw("ERROR::GAMESTATE::INITTEXTURES::COULDN'T LOAD TEXTURE FILE (PLAYER_SHEET.png)");
 }
 
 void GameState::initPauseMenu()
 {
-    this->pMenu = new PauseMenu(*this->window, this->font);
+    sf::VideoMode& vm = this->stateData->graphicsSettings->resolution;
 
-    this->pMenu->addButtons("QUIT", 150.f, "Exit Game");
+    this->pMenu = new PauseMenu(this->stateData->graphicsSettings->resolution, this->font);
+
+    this->pMenu->addButtons("QUIT", gui::p2pY(19.5f, vm), gui::p2pX(18.3f, vm),gui::p2pY(3.2f, vm), gui::calcCharSize(vm),"Exit Game");
+}
+
+void GameState::initShader()
+{
+    if(!this->coreShader.loadFromFile("ResourceFiles/vertex_shader.vert", "ResourceFiles/fragment_shader.frag"))
+    {
+        std::cout << "ERROR::GameState::InitShader::Couldn't Load Shader" << "\n";
+    };/////
 }
 
 void GameState::initPlayers()
@@ -64,7 +74,7 @@ void GameState::initPlayers()
 
 void GameState::initPlayerGui()
 {
-    this->playerGui = new PlayerGUI(this->player);
+    this->playerGui = new PlayerGUI(this->player, this->stateData->graphicsSettings->resolution);
 }
 
 void GameState::initTileMap()
@@ -82,6 +92,7 @@ GameState::GameState(StateData* state_data) :
     this->initFonts();
     this->initTextures();
     this->initPauseMenu();
+    this->initShader();
     this->initPlayers();
     this->initPlayerGui();
     this->initTileMap();
@@ -104,7 +115,8 @@ void GameState::updateTileMap(const float& dt)
 
 void GameState::updateView(const float& dt)
 {
-    this->view.setCenter(std::floor(this->player->getPosition().x), std::floor(this->player->getPosition().y));
+    this->view.setCenter(std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->graphicsSettings->resolution.width / 2)) / 5.f),
+                         std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->graphicsSettings->resolution.height / 2)) / 5.f));
 }
 
 void GameState::updateInput(const float& dt)
@@ -182,7 +194,7 @@ void GameState::render(sf::RenderTarget* target)
     this->renderTexture.setView(this->view);
     this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
 
-    this->player->render(this->renderTexture);
+    this->player->render(this->renderTexture, &this->coreShader);
 
     this->tileMap->renderDeferred(this->renderTexture);
 
