@@ -17,18 +17,10 @@ private:
     sf::VideoMode& vm;
 
     //Hp Bar
-    std::string hpBarString;
-    sf::Text hpBarText;
-    float hpBarMaxWidth;
-    sf::RectangleShape hpBarBack;
-    sf::RectangleShape hpBarInside;
+    gui::ProgressBar* hpBar;
 
     //Exp Bar
-    std::string expBarString;
-    sf::Text expBarText;
-    float expBarMaxWidth;
-    sf::RectangleShape expBarBack;
-    sf::RectangleShape expBarInside;
+    gui::ProgressBar* expBar;
 
     //Hp Bar
     std::string levelBarString;

@@ -32,6 +32,9 @@ public:
     virtual ~AttributeComponent();
 
     //Functions
+    void loseHp(const int hp);
+    void gainHp(const int hp);
+    void loseExp(const unsigned exp);
     void gainExp(const int exp);
     void updateStats(const bool reset);
     void levelUp();

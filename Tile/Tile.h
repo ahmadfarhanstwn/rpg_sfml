@@ -5,7 +5,8 @@ enum TileTypes
 {
     DEFAULT,
     DAMAGING,
-    DOODAD
+    DOODAD,
+    ENEMYSPAWNER
 };
 
 class Tile
@@ -13,27 +14,27 @@ class Tile
 private:
 
 protected:
-    sf::RectangleShape shape;
+    sf::Sprite shape;
     bool collision;
     short type;
 
 public:
     Tile();
-    Tile(int x, int y, float gridSizeF, const sf::Texture& texture_sheet,
-         const sf::IntRect& texture_rect, bool collision = false, short type = TileTypes::DEFAULT);
+    Tile(short type, int x, int y, float gridSizeF, const sf::Texture& texture_sheet,
+         const sf::IntRect& texture_rect, bool collision = false);
     virtual ~Tile();
 
     //Accessors
-    const std::string getAsString() const;
-    const sf::Vector2f& getPosition() const;
-    const bool& getCollision() const;
-    const sf::FloatRect getGlobalBounds() const;
-    const short& getType() const;
+    virtual const std::string getAsString() const;
+    virtual const sf::Vector2f& getPosition() const;
+    virtual const bool& getCollision() const;
+    virtual const sf::FloatRect getGlobalBounds() const;
+    virtual const short& getType() const;
 
     //Functions
     const bool intersects(const sf::FloatRect bounds) const;
-    void update();
-    void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, sf::Vector2f playerPosition = sf::Vector2f());
+    virtual void update();
+    virtual void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, const sf::Vector2f playerPosition = sf::Vector2f());
 };
 
 #endif // TILE_H

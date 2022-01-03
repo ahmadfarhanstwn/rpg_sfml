@@ -8,6 +8,7 @@ void Entity::initVariables()
     this->animationComponent = NULL;
     this->hitboxComponent = NULL;
     this->attributeComponent = NULL;
+    this->skillComponent = NULL;
 }
 
 Entity::Entity()
@@ -21,6 +22,7 @@ Entity::~Entity()
     delete this->animationComponent;
     delete this->hitboxComponent;
     delete this->attributeComponent;
+    delete this->skillComponent;
 }
 
 //Accessors
@@ -94,6 +96,11 @@ void Entity::createHitboxComponent(sf::Sprite& sprite, float offset_x, float off
 void Entity::createAttributeComponent(const unsigned level)
 {
     this->attributeComponent = new AttributeComponent(level);
+}
+
+void Entity::createSkillComponent()
+{
+    this->skillComponent = new SkillComponent();
 }
 
 void Entity::setPosition(const float x, const float y)

@@ -24,6 +24,30 @@ AttributeComponent::~AttributeComponent()
 }
 
 //Function
+void AttributeComponent::loseHp(const int hp)
+{
+    this->hp -= hp;
+
+    if (this->hp < 0)
+        this->hp = 0;
+}
+
+void AttributeComponent::gainHp(const int hp)
+{
+    this->hp += hp;
+
+    if (this->hp > this->hpMax)
+        this->hp = this->hpMax;
+}
+
+void AttributeComponent::loseExp(const unsigned exp)
+{
+    this->exp -= exp;
+
+    if (this->exp < 0)
+        this->exp = 0;
+}
+
 void AttributeComponent::gainExp(const int exp)
 {
     this->exp += exp;

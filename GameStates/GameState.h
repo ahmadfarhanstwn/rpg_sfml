@@ -5,11 +5,15 @@
 #include "PauseMenu.h"
 #include "TileMap.h"
 #include "PlayerGUI.h"
+#include "Sword.h"
+#include "Enemies_Include.h"
 
 class PauseMenu;
 class Player;
 class TileMap;
 class PlayerGUI;
+class Sword;
+class Enemy;
 class sf::View;
 class sf::Font;
 class sf::RenderTexture;
@@ -18,6 +22,7 @@ class GameState : public State
 {
 private:
     sf::View view;
+    sf::Vector2i viewGridPosition;
     sf::RenderTexture renderTexture;
     sf::Sprite renderSprite;
     sf::Shader coreShader;
@@ -28,6 +33,8 @@ private:
     PlayerGUI* playerGui;
 
     TileMap* tileMap;
+
+    std::vector<Enemy*> activeEnemies;
 
     void initDeferredRender();
     void initView();

@@ -5,11 +5,13 @@
 #include "AnimationComponent.h"
 #include "HitboxComponent.h"
 #include "AttributeComponent.h"
+#include "SkillComponent.h"
 
 class MovementComponent;
 class AnimationComponent;
 class HitboxComponent;
 class AttributeComponent;
+class SkillComponent;
 
 class Entity
 {
@@ -24,6 +26,7 @@ protected:
     AnimationComponent* animationComponent;
     HitboxComponent* hitboxComponent;
     AttributeComponent* attributeComponent;
+    SkillComponent* skillComponent;
 
     float movementSpeed;
 
@@ -46,6 +49,7 @@ public:
     void createAnimationComponent(sf::Texture& texture_sheet);
     void createHitboxComponent(sf::Sprite& sprite, float offset_x, float offset_y, float width, float height);
     void createAttributeComponent(const unsigned level);
+    void createSkillComponent();
 
     //Stop Velocity
     virtual void stopVelocity();
@@ -53,8 +57,8 @@ public:
     virtual void stopVelocityY();
 
     virtual void move(const float dir_x, const float dir_y, const float& dt);
-    virtual void update(const float& dt) = 0;
-    virtual void render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitbox) = 0;
+    virtual void update(const float& dt, sf::Vector2f& mouse_pos_view) = 0;
+    virtual void render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f light_position, const bool showHitbox) = 0;
 };
 
 #endif // ENTITY_H

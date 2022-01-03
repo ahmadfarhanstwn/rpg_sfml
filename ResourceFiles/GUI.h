@@ -118,6 +118,34 @@ namespace gui
         void update(const sf::Vector2i& mousePosWindow, const float& dt);
         void render(sf::RenderTarget& target);
     };
+
+    /** ======================= Progress Bar ======================= **/
+    class ProgressBar
+    {
+    private:
+        std::string barString;
+        sf::Text text;
+        float maxWidth;
+        int maxValue;
+        sf::RectangleShape back;
+        sf::RectangleShape inner;
+
+    protected:
+
+    public:
+        ProgressBar(float x, float y, float width, float height, int max_value,
+                    sf::Color inner_color, unsigned character_size,
+                    sf::VideoMode& vm, sf::Font* font = nullptr);
+        ~ProgressBar();
+
+        //Accessors
+
+        //Modifiers
+
+        //Functions
+        void update(const int current_value);
+        void render(sf::RenderTarget& target);
+    };
 }
 
 #endif // BUTTONS_H

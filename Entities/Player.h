@@ -2,6 +2,7 @@
 #define PLAYER_H
 
 #include <Entity.h>
+#include "Sword.h"
 
 class Entity;
 
@@ -12,6 +13,9 @@ private:
     //init functions
     void initVariables();
     void initComponents();
+    void initAnimations();
+
+    Sword sword;
 
 public:
     Player(float x, float y, sf::Texture& texture_sheet);
@@ -28,8 +32,8 @@ public:
 
     void updateAttack();
     void updateAnimation(const float& dt);
-    void update(const float& dt);
-    void render(sf::RenderTarget& target, sf::Shader* shader, const bool showHitbox = false);
+    void update(const float& dt, sf::Vector2f& mouse_pos_view);
+    void render(sf::RenderTarget& target, sf::Shader* shader = nullptr, const sf::Vector2f light_position = sf::Vector2f(), const bool showHitbox = false);
 };
 
 #endif // PLAYER_H

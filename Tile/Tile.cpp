@@ -7,15 +7,15 @@ Tile::Tile()
     this->type = 0;
 }
 
-Tile::Tile(int x, int y, float gridSizeF, const sf::Texture& texture_sheet,
-           const sf::IntRect& texture_rect, bool collision, short type)
+Tile::Tile(short type, int x, int y, float gridSizeF, const sf::Texture& texture_sheet,
+           const sf::IntRect& texture_rect, bool collision)
 {
-    this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
-    this->shape.setFillColor(sf::Color::White);
+//    this->shape.setSize(sf::Vector2f(gridSizeF, gridSizeF));
+//    this->shape.setFillColor(sf::Color::White);
 //    this->shape.setOutlineThickness(1.f);
 //    this->shape.setOutlineColor(sf::Color::Black);
     this->shape.setPosition(static_cast<float>(x) * gridSizeF, static_cast<float>(y) * gridSizeF);
-    this->shape.setTexture(&texture_sheet);
+    this->shape.setTexture(texture_sheet);
     this->shape.setTextureRect(texture_rect);
 
     this->collision = collision;
@@ -32,7 +32,7 @@ const std::string Tile::getAsString() const
 {
     std::stringstream ss;
 
-    ss << this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision << " " << this->type;
+    ss << this->type << " " << this->shape.getTextureRect().left << " " << this->shape.getTextureRect().top << " " << this->collision;
 
     return ss.str();
 }
@@ -65,10 +65,10 @@ const bool Tile::intersects(const sf::FloatRect bounds) const
 
 void Tile::update()
 {
-
+//    this->shape.setColor(sf::Color::Red);
 }
 
-void Tile::render(sf::RenderTarget& target, sf::Shader* shader, sf::Vector2f playerPosition)
+void Tile::render(sf::RenderTarget& target, sf::Shader* shader, const sf::Vector2f playerPosition)
 {
     if (shader)
     {

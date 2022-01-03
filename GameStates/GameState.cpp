@@ -48,6 +48,9 @@ void GameState::initTextures()
 {
     if(!this->textures["PLAYER_SHEET"].loadFromFile("Resources/Images/Sprites/Player/PLAYER_SHEET2.png"))
         throw("ERROR::GAMESTATE::INITTEXTURES::COULDN'T LOAD TEXTURE FILE (PLAYER_SHEET.png)");
+
+    if(!this->textures["RAT1_SHEET"].loadFromFile("Resources/Images/Sprites/Enemy/rat1_60x64.png"))
+        throw("ERROR::GAMESTATE::INITTEXTURES::COULDN'T LOAD TEXTURE FILE (rat1_60x64.png)");
 }
 
 void GameState::initPauseMenu()
@@ -69,7 +72,7 @@ void GameState::initShader()
 
 void GameState::initPlayers()
 {
-    this->player = new Player(0,0, this->textures["PLAYER_SHEET"]);
+    this->player = new Player(250,250, this->textures["PLAYER_SHEET"]);
 }
 
 void GameState::initPlayerGui()
@@ -79,8 +82,7 @@ void GameState::initPlayerGui()
 
 void GameState::initTileMap()
 {
-    this->tileMap = new TileMap(this->stateData->gridSize, 10, 10, "Resources/Images/Tiles/tilesheet1.png");
-    this->tileMap->loadFromFile("test.slmp");
+    this->tileMap = new TileMap("test.slmp");
 }
 
 GameState::GameState(StateData* state_data) :
@@ -96,6 +98,12 @@ GameState::GameState(StateData* state_data) :
     this->initPlayers();
     this->initPlayerGui();
     this->initTileMap();
+
+    this->activeEnemies.push_back(new Rat(200.f, 100.f, this->textures["RAT1_SHEET"]));
+    this->activeEnemies.push_back(new Rat(300.f, 600.f, this->textures["RAT1_SHEET"]));
+    this->activeEnemies.push_back(new Rat(500.f, 300.f, this->textures["RAT1_SHEET"]));
+    this->activeEnemies.push_back(new Rat(900.f, 100.f, this->textures["RAT1_SHEET"]));
+    this->activeEnemies.push_back(new Rat(750.f, 800.f, this->textures["RAT1_SHEET"]));
 }
 
 GameState::~GameState()
@@ -104,19 +112,55 @@ GameState::~GameState()
     delete this->player;
     delete this->tileMap;
     delete this->playerGui;
+
+    for (size_t i = 0; i < this->activeEnemies.size(); i++)
+    {
+        delete this->activeEnemies[i];
+    }
 }
 
 //Functions
 void GameState::updateTileMap(const float& dt)
 {
-    this->tileMap->update();
-    this->tileMap->updateCollision(this->player, dt);
+    this->tileMap->update(this->player, dt);
+
+    for (auto *i : this->activeEnemies)
+    {
+        this->tileMap->update(i, dt);
+    }
 }
 
 void GameState::updateView(const float& dt)
 {
     this->view.setCenter(std::floor(this->player->getPosition().x + (static_cast<float>(this->mousePosWindow.x) - static_cast<float>(this->stateData->graphicsSettings->resolution.width / 2)) / 5.f),
                          std::floor(this->player->getPosition().y + (static_cast<float>(this->mousePosWindow.y) - static_cast<float>(this->stateData->graphicsSettings->resolution.height / 2)) / 5.f));
+
+    if (this->tileMap->getMaxSizeF().x >= this->view.getSize().x)
+    {
+        if (this->view.getCenter().x - this->view.getSize().x / 2.f < 0.f)
+        {
+            this->view.setCenter(0.f + this->view.getSize().x / 2.f, this->view.getCenter().y);
+        }
+        else if (this->view.getCenter().x + this->view.getSize().x / 2.f > this->tileMap->getMaxSizeF().x)
+        {
+            this->view.setCenter(this->tileMap->getMaxSizeF().x - this->view.getSize().x / 2.f, this->view.getCenter().y);
+        }
+    }
+
+    if (this->tileMap->getMaxSizeF().x >= this->view.getSize().x)
+    {
+        if (this->view.getCenter().y - this->view.getSize().y / 2.f < 0.f)
+        {
+            this->view.setCenter(this->view.getCenter().x, 0.f + this->view.getSize().y / 2.f);
+        }
+        else if (this->view.getCenter().y + this->view.getSize().y / 2.f > this->tileMap->getMaxSizeF().y)
+        {
+            this->view.setCenter(this->view.getCenter().x, this->tileMap->getMaxSizeF().y - this->view.getSize().y / 2.f);
+        }
+    }
+
+    this->viewGridPosition.x = static_cast<int>(this->view.getCenter().x) / static_cast<int>(this->stateData->gridSize);
+    this->viewGridPosition.y = static_cast<int>(this->view.getCenter().y) / static_cast<int>(this->stateData->gridSize);
 }
 
 void GameState::updateInput(const float& dt)
@@ -174,8 +218,12 @@ void GameState::update(const float& dt)
         this->updateView(dt);
         this->updatePlayerInput(dt);
         this->updateTileMap(dt);
-        this->player->update(dt);
+        this->player->update(dt, this->mousePosView);
         this->playerGui->update(dt);
+        for (auto *i : this->activeEnemies)
+        {
+            i->update(dt, this->mousePosView);
+        }
     }
     else //paused
     {
@@ -192,11 +240,22 @@ void GameState::render(sf::RenderTarget* target)
     this->renderTexture.clear();
 
     this->renderTexture.setView(this->view);
-    this->tileMap->render(this->renderTexture, this->player->getGridPosition(static_cast<int>(this->stateData->gridSize)));
+    this->tileMap->render(this->renderTexture,
+                          this->viewGridPosition,
+                          &this->coreShader,
+                          this->player->getCenter(),
+                          false);
 
-    this->player->render(this->renderTexture, &this->coreShader);
+    for (auto *i : this->activeEnemies)
+    {
+        i->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
+    }
 
-    this->tileMap->renderDeferred(this->renderTexture);
+    this->player->render(this->renderTexture, &this->coreShader, this->player->getCenter(), false);
+
+    this->tileMap->renderDeferred(this->renderTexture,
+                                  &this->coreShader,
+                                  this->player->getCenter());
 
     this->renderTexture.setView(this->renderTexture.getDefaultView());
     this->playerGui->render(this->renderTexture);

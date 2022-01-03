@@ -245,24 +245,24 @@ gui::TextureSelector::TextureSelector(float x, float y, float width, float heigh
     float offset = grid_size;
 
     this->bounds.setSize(sf::Vector2f(width,height));
-    this->bounds.setPosition(x + 60,y);
+    this->bounds.setPosition(x + offset,y);
     this->bounds.setFillColor(sf::Color(50,50,50,100));
     this->bounds.setOutlineThickness(1.f);
     this->bounds.setOutlineColor(sf::Color(255,255,255,200));
 
     this->sheet.setTexture(*texture_sheet);
-    this->sheet.setPosition(x + 60,y);
+    this->sheet.setPosition(x + offset,y);
 
     if (this->sheet.getGlobalBounds().width > this->bounds.getGlobalBounds().width)
     {
         this->sheet.setTextureRect(sf::IntRect(0,0,static_cast<int>(this->bounds.getGlobalBounds().width), static_cast<int>(this->bounds.getGlobalBounds().height)));
     }
-    else if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
+    if (this->sheet.getGlobalBounds().height > this->bounds.getGlobalBounds().height)
     {
         this->sheet.setTextureRect(sf::IntRect(0,0,static_cast<int>(this->bounds.getGlobalBounds().width), static_cast<int>(this->bounds.getGlobalBounds().height)));
     }
 
-    this->selector.setPosition(x + 60,y);
+    this->selector.setPosition(x + offset,y);
     this->selector.setSize(sf::Vector2f(grid_size, grid_size));
     this->selector.setFillColor(sf::Color::Transparent);
     this->selector.setOutlineThickness(1.f);
@@ -328,13 +328,12 @@ void gui::TextureSelector::update(const sf::Vector2i& mousePosWindow, const floa
     //Update Texture Selector
     if (!this->hidden)
     {
-        if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
-            this->active = true;
-        else
-            this->active = false;
+        this->active = false;
 
-        if (this->active)
+        if (this->bounds.getGlobalBounds().contains(static_cast<sf::Vector2f>(mousePosWindow)))
         {
+            this->active = true;
+
             this->mousePosGrid.x = (mousePosWindow.x - static_cast<int>(this->bounds.getPosition().x)) / static_cast<unsigned>(this->gridSize);
             this->mousePosGrid.y = (mousePosWindow.y - static_cast<int>(this->bounds.getPosition().y)) / static_cast<unsigned>(this->gridSize);
 
@@ -362,4 +361,58 @@ void gui::TextureSelector::render(sf::RenderTarget& target)
     }
 
     this->hideButton->render(target);
+}
+
+/** ============================= PROGRESS BAR =====================================**/
+gui::ProgressBar::ProgressBar(float _x, float _y, float _width, float _height, int max_value,
+                              sf::Color inner_color, unsigned character_size,
+                              sf::VideoMode& vm, sf::Font* font)
+{
+    float width = gui::p2pX(_width, vm);
+    float height = gui::p2pY(_height, vm);
+    this->maxWidth = width;
+    float x = gui::p2pX(_x, vm);
+    float y = gui::p2pY(_y, vm);
+    this->maxValue = max_value;
+
+    this->back.setSize(sf::Vector2f(width,height));
+    this->back.setFillColor(sf::Color(50,50,50,200));
+    this->back.setPosition(x, y);
+
+    this->inner.setSize(sf::Vector2f(width,height));
+    this->inner.setFillColor(inner_color);
+    this->inner.setPosition(this->back.getPosition());
+
+    if (font)
+    {
+        this->text.setFont(*font);
+        this->text.setPosition(this->back.getPosition().x + gui::p2pX(0.73f,vm),
+                                    this->back.getPosition().y + gui::p2pY(0.65f,vm));
+        this->text.setCharacterSize(gui::calcCharSize(vm, character_size));
+    }
+}
+
+gui::ProgressBar::~ProgressBar()
+{
+
+}
+
+//Functions
+void gui::ProgressBar::update(const int current_value)
+{
+    float percentage = static_cast<float>(current_value) / static_cast<float>(this->maxValue);
+
+    this->inner.setSize(sf::Vector2f(static_cast<float>(std::floor(this->maxWidth * percentage)),
+                                                                    this->inner.getSize().y));
+
+    this->barString = std::to_string(current_value) + " / " + std::to_string(this->maxValue);
+
+    this->text.setString(this->barString);
+}
+
+void gui::ProgressBar::render(sf::RenderTarget& target)\
+{
+    target.draw(this->back);
+    target.draw(this->inner);
+    target.draw(this->text);
 }

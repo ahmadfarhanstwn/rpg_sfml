@@ -7,46 +7,14 @@ void PlayerGUI::initFont()
 
 void PlayerGUI::initHpBar()
 {
-    float width = gui::p2pX(21.3f, vm);
-    float height = gui::p2pY(6.5f, vm);
-    this->hpBarMaxWidth = width;
-    float x = gui::p2pX(1.4f, vm);
-    float y = gui::p2pY(2.6f, vm);
-
-    this->hpBarBack.setSize(sf::Vector2f(width,height));
-    this->hpBarBack.setFillColor(sf::Color(50,50,50,200));
-    this->hpBarBack.setPosition(x, y);
-
-    this->hpBarInside.setSize(sf::Vector2f(width,height));
-    this->hpBarInside.setFillColor(sf::Color(250,20,20,200));
-    this->hpBarInside.setPosition(this->hpBarBack.getPosition());
-
-    this->hpBarText.setFont(this->font);
-    this->hpBarText.setPosition(this->hpBarBack.getPosition().x + gui::p2pX(0.73f,vm),
-                                this->hpBarBack.getPosition().y + gui::p2pY(0.65f,vm));
-    this->hpBarText.setCharacterSize(gui::calcCharSize(vm, 90));
+    this->hpBar = new gui::ProgressBar(1.4f, 2.6f, 21.3f, 6.5f, this->player->getAttributeComponent()->hpMax,
+                                       sf::Color::Red, 90, this->vm, &this->font);
 }
 
 void PlayerGUI::initExpBar()
 {
-    float width = gui::p2pX(13.6f, vm);
-    float height = gui::p2pY(3.9f, vm);
-    this->expBarMaxWidth = width;
-    float x = gui::p2pX(1.4f, vm);
-    float y = gui::p2pY(11.f, vm);
-
-    this->expBarBack.setSize(sf::Vector2f(width,height));
-    this->expBarBack.setFillColor(sf::Color(50,50,50,200));
-    this->expBarBack.setPosition(x, y);
-
-    this->expBarInside.setSize(sf::Vector2f(width,height));
-    this->expBarInside.setFillColor(sf::Color(20,250,20,200));
-    this->expBarInside.setPosition(this->expBarBack.getPosition());
-
-    this->expBarText.setFont(this->font);
-    this->expBarText.setPosition(this->expBarBack.getPosition().x + gui::p2pX(0.73f,vm),
-                                 this->expBarBack.getPosition().y + gui::p2pY(0.65f,vm));
-    this->expBarText.setCharacterSize(gui::calcCharSize(vm,90));
+    this->expBar = new gui::ProgressBar(1.4f, 11.1f, 13.6f, 3.9f, this->player->getAttributeComponent()->expNext,
+                                        sf::Color::Blue, 150, this->vm, &this->font);
 }
 
 void PlayerGUI::initLevelBar()
@@ -79,32 +47,19 @@ PlayerGUI::PlayerGUI(Player* player, sf::VideoMode& vm) : vm(vm)
 
 PlayerGUI::~PlayerGUI()
 {
-    //dtor
+    delete this->hpBar;
+    delete this->expBar;
 }
 
 //Functions
 void PlayerGUI::updateHpBar()
 {
-    float percentage = static_cast<float>(this->player->getAttributeComponent()->hp) / static_cast<float>(this->player->getAttributeComponent()->hpMax);
-
-    this->hpBarInside.setSize(sf::Vector2f(static_cast<float>(std::floor(this->hpBarMaxWidth * percentage)),
-                                                                         this->hpBarInside.getSize().y));
-
-    this->hpBarString = std::to_string(this->player->getAttributeComponent()->hp) + " / " + std::to_string(this->player->getAttributeComponent()->hpMax);
-
-    this->hpBarText.setString(this->hpBarString);
+    this->hpBar->update(this->player->getAttributeComponent()->hp);
 }
 
 void PlayerGUI::updateExpBar()
 {
-    float percentage = static_cast<float>(this->player->getAttributeComponent()->exp) / static_cast<float>(this->player->getAttributeComponent()->expNext);
-
-    this->expBarInside.setSize(sf::Vector2f(static_cast<float>(std::floor(this->expBarMaxWidth * percentage)),
-                                                                         this->expBarInside.getSize().y));
-
-    this->expBarString = std::to_string(this->player->getAttributeComponent()->exp) + " / " + std::to_string(this->player->getAttributeComponent()->expNext);
-
-    this->expBarText.setString(this->expBarString);
+    this->expBar->update(this->player->getAttributeComponent()->exp);
 }
 
 void PlayerGUI::updateLevelBar()
@@ -123,16 +78,12 @@ void PlayerGUI::update(const float& dt)
 
 void PlayerGUI::renderHpBar(sf::RenderTarget& target)
 {
-    target.draw(this->hpBarBack);
-    target.draw(this->hpBarInside);
-    target.draw(this->hpBarText);
+    this->hpBar->render(target);
 }
 
 void PlayerGUI::renderExpBar(sf::RenderTarget& target)
 {
-    target.draw(this->expBarBack);
-    target.draw(this->expBarInside);
-    target.draw(this->expBarText);
+    this->expBar->render(target);
 }
 
 void PlayerGUI::renderLevelBar(sf::RenderTarget& target)

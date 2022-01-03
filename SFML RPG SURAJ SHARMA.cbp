@@ -22,6 +22,10 @@
 					<Add directory="Tile" />
 					<Add directory="GUI" />
 					<Add directory="Map" />
+					<Add directory="Items" />
+					<Add directory="Items/MeleeWeapon" />
+					<Add directory="Items/RangedWeapon" />
+					<Add directory="GameStates/EditorModes" />
 				</Compiler>
 			</Target>
 			<Target title="Release">
@@ -39,6 +43,10 @@
 					<Add directory="Tile" />
 					<Add directory="GUI" />
 					<Add directory="Map" />
+					<Add directory="Items" />
+					<Add directory="Items/MeleeWeapon" />
+					<Add directory="Items/RangedWeapon" />
+					<Add directory="GameStates/EditorModes" />
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
@@ -68,6 +76,10 @@
 		<Unit filename="Components/HitboxComponent.h" />
 		<Unit filename="Components/MovementComponent.cpp" />
 		<Unit filename="Components/MovementComponent.h" />
+		<Unit filename="Components/SkillComponent.cpp" />
+		<Unit filename="Components/SkillComponent.h" />
+		<Unit filename="Entities/Enemy.cpp" />
+		<Unit filename="Entities/Enemy.h" />
 		<Unit filename="Entities/Entity.cpp" />
 		<Unit filename="Entities/Entity.h" />
 		<Unit filename="Entities/Player.cpp" />
@@ -76,6 +88,13 @@
 		<Unit filename="GUI/PauseMenu.h" />
 		<Unit filename="GUI/PlayerGUI.cpp" />
 		<Unit filename="GUI/PlayerGUI.h" />
+		<Unit filename="GameStates/EditorModes/DefaultMode.cpp" />
+		<Unit filename="GameStates/EditorModes/DefaultMode.h" />
+		<Unit filename="GameStates/EditorModes/EditorMode.cpp" />
+		<Unit filename="GameStates/EditorModes/EditorMode.h" />
+		<Unit filename="GameStates/EditorModes/EditorModes.h" />
+		<Unit filename="GameStates/EditorModes/EnemyEditorMode.cpp" />
+		<Unit filename="GameStates/EditorModes/EnemyEditorMode.h" />
 		<Unit filename="GameStates/EditorState.cpp" />
 		<Unit filename="GameStates/EditorState.h" />
 		<Unit filename="GameStates/GameState.cpp" />
@@ -84,12 +103,24 @@
 		<Unit filename="GameStates/MainMenuState.h" />
 		<Unit filename="GameStates/SettingsState.cpp" />
 		<Unit filename="GameStates/SettingsState.h" />
+		<Unit filename="Items/Items.cpp" />
+		<Unit filename="Items/Items.h" />
+		<Unit filename="Items/MeleeWeapon/MeleeWeapon.cpp" />
+		<Unit filename="Items/MeleeWeapon/MeleeWeapon.h" />
+		<Unit filename="Items/MeleeWeapon/Sword.cpp" />
+		<Unit filename="Items/MeleeWeapon/Sword.h" />
+		<Unit filename="Items/RangedWeapon/Bow.cpp" />
+		<Unit filename="Items/RangedWeapon/Bow.h" />
+		<Unit filename="Items/RangedWeapon/RangedWeapon.cpp" />
+		<Unit filename="Items/RangedWeapon/RangedWeapon.h" />
 		<Unit filename="Map/TileMap.cpp" />
 		<Unit filename="Map/TileMap.h" />
 		<Unit filename="ResourceFiles/GUI.cpp" />
 		<Unit filename="ResourceFiles/GUI.h" />
 		<Unit filename="ResourceFiles/fragment_shader.frag" />
 		<Unit filename="ResourceFiles/vertex_shader.vert" />
+		<Unit filename="Tile/EnemySpawner.cpp" />
+		<Unit filename="Tile/EnemySpawner.h" />
 		<Unit filename="Tile/Tile.cpp" />
 		<Unit filename="Tile/Tile.h" />
 		<Unit filename="include/Game.h" />
